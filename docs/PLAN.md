@@ -2,11 +2,14 @@
 
 Milestones run one at a time, each started on Nilo's go-ahead and stopped for his review (see [AGENTS.md](../AGENTS.md)).
 
-1. **Badge catalog.** `data/badges.json` with every badge: id, public name, team, team URL, WordPress.org CSS class, color, icon and whether it is a team badge. Research on how to get a user's badges from WordPress.org. *Done, pending review.*
-2. **Single badge generator.** A JavaScript function that takes a badge id, a format (SVG or PNG) and a size, and returns the image in the old style, checked against Nilo's reference image. Includes the icons: the Dashicons the catalog uses and the custom SVGs from the profile CSS.
-3. **Proof-of-concept page.** A badge selector, size and format fields, a generate button and a download. Published on GitHub Pages.
+The project is a WordPress plugin, published on GitHub only (not in the WordPress.org directory). Badge drawing lives in a standalone JavaScript library that works both in the browser and in Node; the plugin uses it in an admin page and fetches the user's badges on the server, which avoids the CORS limits of profiles.wordpress.org (see [wporg-profile-api.md](wporg-profile-api.md)).
+
+1. **Badge catalog.** `data/badges.json` with every badge: WordPress.org association slug, public name, team, team URL, profile CSS class, color, icon and whether it is a team badge. Research on how to get a user's badges from WordPress.org. *Done, pending review.*
+2. **Badge library.** A JavaScript module, usable in the browser and in Node, that takes a badge id from the catalog, a format (SVG or PNG) and a size, and returns the image in the old style, checked against Nilo's reference image. It always builds an SVG and rasterizes it for PNG. Icons are SVG paths: the Dashicons the catalog uses, taken from the official Dashicons repository, plus the custom SVGs from the profile CSS.
+3. **Plugin skeleton and badge page.** The WordPress plugin with an admin page ("My WordPress.org Badges"): a badge selector, size and format fields, a preview and a download, using the library.
 
 Later, not yet planned in detail:
 
+- Loading the user's badges: a REST endpoint in the plugin that reads `https://profiles.wordpress.org/<username>/groups/?num=100` on the server, with a cache.
 - A grid editor: pick badges and lay them out (for example, five columns), like Nilo's reference image.
-- Loading a user's badges from their WordPress.org profile (see [wporg-profile-api.md](wporg-profile-api.md)).
+- Uploading the generated image to the Media Library through the WordPress REST API: PNG by default, SVG only if the user turns on an option.

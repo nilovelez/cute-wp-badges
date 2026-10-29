@@ -4,7 +4,7 @@ Read this file, then [docs/HANDOFF.md](docs/HANDOFF.md) for where the work stand
 
 ## The project
 
-An image generator for WordPress.org profile badges, drawn in the old profile style (a colored ring around a white or tinted circle, with the icon in the badge color). The end goal: anyone enters their WordPress.org profile and gets an image, such as a grid, of their own badges. It must run as a static site on GitHub Pages: HTML and JavaScript only, no server.
+An image generator for WordPress.org profile badges, drawn in the old profile style (a colored ring around a white or tinted circle, with the icon in the badge color). The end goal: anyone gets an image, such as a grid, of their own badges. It is a WordPress plugin, published on GitHub only, built around a standalone JavaScript library that draws the badges in the browser and in Node. See [docs/PLAN.md](docs/PLAN.md).
 
 ## How we work with Nilo
 

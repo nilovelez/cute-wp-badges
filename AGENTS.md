@@ -22,7 +22,7 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 
 - Check the environment with the skill's `check-env.mjs` at the start of a session.
 - WordPress Coding Standards: `composer install` once, then `composer lint` before every commit that touches PHP.
-- Test sites: Nilo's site is in Studio (see [docs/HANDOFF.md](docs/HANDOFF.md#testing)); when he asks for a test site, use it. Playground only when he asks for it (`npx @wp-playground/cli@latest server --blueprint ./blueprint.json --mount-dir . /wordpress/wp-content/plugins/cute-wp-badges`), with `--site-url http://<IP>:9400` using this machine's Tailscale IP (`tailscale ip -4`), or its LAN IP if it has none. Login `admin` / `password`. Start a site only when Nilo asks for it, and give him the URL.
+- Test sites: Playground, which Nilo reaches from another machine over Tailscale (`npx @wp-playground/cli@latest server --blueprint ./blueprint.json --mount-dir . /wordpress/wp-content/plugins/cute-wp-badges`), with `--site-url http://<IP>:9400` using this machine's Tailscale IP (`tailscale ip -4`), or its LAN IP if it has none. Login `admin` / `password`. Start a site only when Nilo asks for it, and give him the URL. The Studio site (see [docs/HANDOFF.md](docs/HANDOFF.md#testing)) is only for when he works on this machine itself, over VNC: Studio only takes `.local` domains and listens on localhost, so it cannot be reached by IP.
 - `assets/` and `assets-src/` are reserved for the WordPress.org directory images, as the skill says, even if the plugin is only on GitHub for now. The plugin's own files (icons, scripts) live in `resources/`. Development files are `export-ignore` in `.gitattributes`.
 
 ## Layout

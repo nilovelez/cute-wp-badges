@@ -19,8 +19,8 @@ Nilo reviews milestone 4. The next one is the grid (milestone 5 in [PLAN.md](PLA
 
 ## Testing
 
-- Nilo's test site is in Studio: `C:\Users\manolito\Studio\cute-wp-badges`, `http://cute-wp-badges.local/`, with the repo linked into its plugins folder. Use it unless he asks for Playground. `studio wp --path <site> eval-file <file>` runs PHP checks with the site stopped.
-- Playground test sites: start Playground with `--site-url` set to this machine's Tailscale IP (`tailscale ip -4`), or its LAN IP if it has none, and give him the URL. WordPress redirects to the URL it started with, so changing the address means restarting the site.
+- Test sites for Nilo: start Playground with `--site-url` set to this machine's Tailscale IP (`tailscale ip -4`), or its LAN IP if it has none, and give him the URL. WordPress redirects to the URL it started with, so changing the address means restarting the site.
+- There is also a Studio site, `C:\Users\manolito\Studio\cute-wp-badges`, at `http://localhost:8884` with no custom domain, and the repo linked into its plugins folder. It is only for Nilo when he is on this machine over VNC: Studio only takes `.local` domains and listens on localhost, so it cannot be reached by IP. `studio wp --path <site> eval-file <file>` is handy for PHP checks, even with the site stopped.
 - `npm run samples` renders every badge into `samples/` to check the library by eye.
 - For automated browser checks, `--dump-dom` is not reliable with asynchronous code; poll the page through the DevTools protocol (`--remote-debugging-port`) instead.
 

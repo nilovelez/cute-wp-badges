@@ -47,7 +47,7 @@
       "verified": false
     },
     {
-      "id": "design-team",
+      "id": "design",
       "name": "Design Team",
       "team": "Design",
       "teamUrl": "https://make.wordpress.org/design/",
@@ -58,7 +58,9 @@
         "name": "art"
       },
       "isTeam": true,
-      "aliases": [],
+      "aliases": [
+        "design-team"
+      ],
       "verified": false
     },
     {
@@ -214,7 +216,7 @@
       "verified": true
     },
     {
-      "id": "themes-team",
+      "id": "theme-review-team",
       "name": "Themes Team",
       "team": "Themes",
       "teamUrl": "https://make.wordpress.org/themes/",
@@ -226,7 +228,7 @@
       },
       "isTeam": true,
       "aliases": [
-        "theme-review-team"
+        "themes-team"
       ],
       "verified": false
     },
@@ -246,8 +248,8 @@
       "verified": true
     },
     {
-      "id": "plugin-review-team",
-      "name": "Plugin Review Team",
+      "id": "plugins-team",
+      "name": "Plugins Team",
       "team": "Plugins",
       "teamUrl": "https://make.wordpress.org/plugins/",
       "wporgClass": "badge-plugins-reviewer",
@@ -258,7 +260,7 @@
       },
       "isTeam": true,
       "aliases": [
-        "plugins-team"
+        "plugin-review-team"
       ],
       "verified": false
     },
@@ -505,7 +507,7 @@
       "verified": false
     },
     {
-      "id": "wp-cli-contributor",
+      "id": "cli-contributor",
       "name": "WP-CLI Contributor",
       "team": "CLI",
       "teamUrl": "https://make.wordpress.org/cli/",
@@ -516,13 +518,11 @@
         "name": "arrow-right-alt2"
       },
       "isTeam": false,
-      "aliases": [
-        "cli-contributor"
-      ],
+      "aliases": [],
       "verified": false
     },
     {
-      "id": "wp-cli-team",
+      "id": "cli-team",
       "name": "WP-CLI Team",
       "team": "CLI",
       "teamUrl": "https://make.wordpress.org/cli/",
@@ -534,7 +534,7 @@
       },
       "isTeam": true,
       "aliases": [
-        "cli-team"
+        "wp-cli-team"
       ],
       "verified": false
     },
@@ -809,7 +809,7 @@
       "verified": true
     },
     {
-      "id": "core-performance-contributor",
+      "id": "performance-contributor",
       "name": "Core Performance Contributor",
       "team": "Core Performance",
       "teamUrl": "https://make.wordpress.org/performance/",
@@ -821,12 +821,12 @@
       },
       "isTeam": false,
       "aliases": [
-        "performance-contributor"
+        "core-performance-contributor"
       ],
       "verified": false
     },
     {
-      "id": "core-performance-team",
+      "id": "performance-team",
       "name": "Core Performance Team",
       "team": "Core Performance",
       "teamUrl": "https://make.wordpress.org/performance/",
@@ -838,7 +838,7 @@
       },
       "isTeam": true,
       "aliases": [
-        "performance-team"
+        "core-performance-team"
       ],
       "verified": false
     },

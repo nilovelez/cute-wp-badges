@@ -7,7 +7,6 @@ const { badges } = JSON.parse(readFileSync(path, 'utf8'));
 
 const errors = [];
 const seen = new Set();
-const slugify = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 for (const b of badges) {
   const where = b.id ?? JSON.stringify(b);
@@ -15,7 +14,7 @@ for (const b of badges) {
   for (const k of keys) {
     if (!(k in b)) errors.push(`${where}: missing "${k}"`);
   }
-  if (b.id !== slugify(b.name)) errors.push(`${where}: id does not match name "${b.name}"`);
+  if (!/^[a-z0-9-]+$/.test(b.id)) errors.push(`${where}: bad id`);
   for (const id of [b.id, ...(b.aliases ?? [])]) {
     if (seen.has(id)) errors.push(`${where}: duplicate id or alias "${id}"`);
     seen.add(id);

@@ -4,7 +4,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Current state
 
-- Milestones 1 (badge catalog), 2 (badge library) and 3 (plugin skeleton and badge page) are done. Milestone 4 (tabs and the user's badges) is done and waiting for Nilo's review. See [PLAN.md](PLAN.md).
+- Milestones 1 (badge catalog), 2 (badge library) and 3 (plugin skeleton and badge page) are done. Milestone 4 (tabs and the user's badges) is done; Nilo tested it in Playground and approved it. See [PLAN.md](PLAN.md).
 - The admin page has two tabs, chosen with `?tab=profile` (default) or `?tab=any`; each loads its own script module (`resources/js/profile-tab.js`, `resources/js/any-tab.js`), and both use `resources/js/badge-output.js` for size, format, preview and download. Strings for the profile tab come from PHP in a `data-settings` attribute, since script modules have no `wp.i18n` in WordPress 6.6.
 - `includes/profile-badges.php` registers `GET /cute-wp-badges/v1/badges/<username>`: it reads the profile's groups tab on the server, caches the associations for 12 hours in a transient (errors are not cached), and splits them into catalog badge ids (aliases included) and unknown badges. Tested with WP-CLI: nilovelez (22 badges), a profile with none (`test`), an unknown user (404), an alias and an unknown badge (fake cache).
 - `data/badges.json` has 67 badges. Every `id` and `name` matches the BuddyPress associations directory on profiles.wordpress.org; 22 classes and icons are also verified against a live profile. Open points are listed in [badges.md](badges.md#open-points).
@@ -15,7 +15,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Nilo reviews milestone 4. The next one is the grid (milestone 5 in [PLAN.md](PLAN.md)), not planned in detail yet. Do not start anything until Nilo says so.
+Milestone 5 (selection, order and grid, with the state saved per user) is planned in detail in [PLAN.md](PLAN.md), with Nilo's decisions. Do not start it until Nilo says so.
 
 ## Testing
 

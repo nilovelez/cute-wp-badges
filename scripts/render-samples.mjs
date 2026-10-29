@@ -19,7 +19,7 @@ const REFERENCE = [
   'wordcamp-volunteer', 'theme-developer', 'support-contributor', 'meta-contributor',
 ];
 
-// Lays badges out on a grid and returns it as a PNG.
+// Lays badges out on a grid and returns it as a PNG with a transparent background.
 async function grid(ids, { columns, size, gap }) {
   const rows = Math.ceil(ids.length / columns);
   const width = columns * size + (columns + 1) * gap;
@@ -31,7 +31,7 @@ async function grid(ids, { columns, size, gap }) {
     const svg = await renderBadge(id, { size });
     cells += svg.replace('<svg ', `<svg x="${x}" y="${y}" `);
   }
-  const sheet = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><rect width="100%" height="100%" fill="#ffffff"/>${cells}</svg>`;
+  const sheet = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">${cells}</svg>`;
   return new Resvg(sheet).render().asPng();
 }
 

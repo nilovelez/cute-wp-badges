@@ -4,7 +4,9 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Current state
 
-- Milestones 1 (badge catalog), 2 (badge library) and 3 (plugin skeleton and badge page) are done. See [PLAN.md](PLAN.md).
+- Milestones 1 (badge catalog), 2 (badge library) and 3 (plugin skeleton and badge page) are done. Milestone 4 (tabs and the user's badges) is done and waiting for Nilo's review. See [PLAN.md](PLAN.md).
+- The admin page has two tabs, chosen with `?tab=profile` (default) or `?tab=any`; each loads its own script module (`resources/js/profile-tab.js`, `resources/js/any-tab.js`), and both use `resources/js/badge-output.js` for size, format, preview and download. Strings for the profile tab come from PHP in a `data-settings` attribute, since script modules have no `wp.i18n` in WordPress 6.6.
+- `includes/profile-badges.php` registers `GET /cute-wp-badges/v1/badges/<username>`: it reads the profile's groups tab on the server, caches the associations for 12 hours in a transient (errors are not cached), and splits them into catalog badge ids (aliases included) and unknown badges. Tested with WP-CLI: nilovelez (22 badges), a profile with none (`test`), an unknown user (404), an alias and an unknown badge (fake cache).
 - `data/badges.json` has 67 badges. Every `id` and `name` matches the BuddyPress associations directory on profiles.wordpress.org; 22 classes and icons are also verified against a live profile. Open points are listed in [badges.md](badges.md#open-points).
 - `resources/js/cute-wp-badges.js` draws any badge as SVG or PNG, in the browser and in Node, with a transparent background outside the badge. Icon `<style>` elements are stripped, since their rules would leak into every badge in the same document.
 - Tools → WordPress.org Badges (`includes/admin-page.php`, `resources/js/admin-page.js`, `resources/css/admin-page.css`) lets you pick any badge, a size and a format, previews it and downloads it. It is a proof of concept of the WordPress integration: the page, loading the library and the download stay; the selector with every badge is temporary. The library is registered as the script module `@cute-wp-badges/cute-wp-badges`. The minimum WordPress version is 6.6, the first one that prints script modules in wp-admin. Nilo tried it in Playground.
@@ -13,11 +15,12 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-The next milestone is not planned in detail yet; the candidates are under "Later" in [PLAN.md](PLAN.md), starting with loading a user's own badges from their profile. Do not start anything until Nilo says so.
+Nilo reviews milestone 4. The next one is the grid (milestone 5 in [PLAN.md](PLAN.md)), not planned in detail yet. Do not start anything until Nilo says so.
 
 ## Testing
 
-- Test sites for Nilo: start Playground with `--site-url` set to this machine's Tailscale IP (`tailscale ip -4`), or its LAN IP if it has none, and give him the URL. WordPress redirects to the URL it started with, so changing the address means restarting the site.
+- Nilo's test site is in Studio: `C:\Users\manolito\Studio\cute-wp-badges`, `http://cute-wp-badges.local/`, with the repo linked into its plugins folder. Use it unless he asks for Playground. `studio wp --path <site> eval-file <file>` runs PHP checks with the site stopped.
+- Playground test sites: start Playground with `--site-url` set to this machine's Tailscale IP (`tailscale ip -4`), or its LAN IP if it has none, and give him the URL. WordPress redirects to the URL it started with, so changing the address means restarting the site.
 - `npm run samples` renders every badge into `samples/` to check the library by eye.
 - For automated browser checks, `--dump-dom` is not reliable with asynchronous code; poll the page through the DevTools protocol (`--remote-debugging-port`) instead.
 

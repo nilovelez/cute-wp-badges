@@ -4,6 +4,62 @@
  * @package Cute_WP_Badges
  */
 
+/* The display rules below would otherwise override the hidden attribute. */
+#cute-wp-badges-profile [hidden],
+.cute-wp-badges-preview [hidden] {
+	display: none;
+}
+
+/* The badges of a profile, as buttons with a small image and the name. */
+.cute-wp-badges-picker {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+	gap: 8px;
+	max-width: 960px;
+	margin: 0 0 16px;
+}
+
+.cute-wp-badges-picker li {
+	margin: 0;
+}
+
+.cute-wp-badges-picker button {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	width: 100%;
+	height: 100%;
+	padding: 10px 6px;
+	font: inherit;
+	line-height: 1.3;
+	text-align: center;
+	color: #1d2327;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.cute-wp-badges-picker button:hover {
+	border-color: #8c8f94;
+}
+
+.cute-wp-badges-picker button:focus-visible {
+	outline: 2px solid var(--wp-admin-theme-color, #2271b1);
+	outline-offset: 1px;
+}
+
+.cute-wp-badges-picker button[aria-pressed="true"] {
+	background: #f0f6fc;
+	border-color: var(--wp-admin-theme-color, #2271b1);
+	box-shadow: 0 0 0 1px var(--wp-admin-theme-color, #2271b1);
+}
+
+.cute-wp-badges-picker img {
+	display: block;
+}
+
 /* A checkerboard behind the preview, so the transparent background shows. */
 .cute-wp-badges-preview {
 	display: inline-block;

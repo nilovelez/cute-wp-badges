@@ -1,39 +1,35 @@
 /**
- * The "My WordPress.org Badges" admin page: draws the chosen badge with the
- * badge library, shows it and offers it for download.
+ * The part of the badge page both tabs share: draws the chosen badge with the
+ * badge library at the chosen size and format, shows it and offers it for
+ * download.
  *
  * @package Cute_WP_Badges
  */
 
-import { getBadges, renderBadge } from '@cute-wp-badges/cute-wp-badges';
+import { renderBadge } from '@cute-wp-badges/cute-wp-badges';
 
+const output = document.getElementById( 'cute-wp-badges-output' );
 const form = document.getElementById( 'cute-wp-badges-form' );
-const badgeField = document.getElementById( 'cute-wp-badges-badge' );
 const image = document.getElementById( 'cute-wp-badges-image' );
 const message = document.getElementById( 'cute-wp-badges-message' );
 const download = document.getElementById( 'cute-wp-badges-download' );
 
+let badgeId = null;
+let badgeName = '';
 let imageUrl = null;
 let lastRequest = 0;
 
 /**
- * Fills the badge selector with every badge in the catalog, by name.
- */
-async function fillBadges() {
-	const badges = [ ...( await getBadges() ) ];
-	badges.sort( ( a, b ) => a.name.localeCompare( b.name ) );
-	for ( const badge of badges ) {
-		badgeField.add( new Option( badge.name, badge.id ) );
-	}
-}
-
-/**
- * Draws the badge chosen in the form and updates the preview and the download link.
+ * Draws the current badge and updates the preview and the download link.
  */
 async function update() {
+	if ( ! badgeId ) {
+		return;
+	}
+
 	lastRequest++;
 	const request = lastRequest;
-	const id = badgeField.value;
+	const id = badgeId;
 	const size = Number( form.elements.size.value );
 	const format = form.elements.format.value;
 
@@ -61,7 +57,7 @@ async function update() {
 	imageUrl = URL.createObjectURL( blob );
 
 	image.src = imageUrl;
-	image.alt = badgeField.selectedOptions[ 0 ].text;
+	image.alt = badgeName;
 	image.hidden = false;
 	download.href = imageUrl;
 	download.download = `${ id }-${ size }.${ format }`;
@@ -69,8 +65,26 @@ async function update() {
 	message.textContent = '';
 }
 
+/**
+ * Shows the size, format, preview and download for a badge.
+ *
+ * @param {string} id   Badge id.
+ * @param {string} name Badge name, for the preview's alternative text.
+ */
+export function showBadge( id, name ) {
+	badgeId = id;
+	badgeName = name;
+	output.hidden = false;
+	update();
+}
+
+/**
+ * Hides the size, format, preview and download.
+ */
+export function hideBadge() {
+	badgeId = null;
+	output.hidden = true;
+}
+
 form.addEventListener( 'input', update );
 form.addEventListener( 'submit', ( event ) => event.preventDefault() );
-
-await fillBadges();
-await update();

@@ -2,11 +2,16 @@
 
 WordPress plugin that generates images of WordPress.org profile badges, in the classic profile style.
 
-Work in progress. So far the project has a catalog of every badge (`data/badges.json`), documented in [docs/badges.md](docs/badges.md), a JavaScript library that draws them, and a first admin page to try it.
+Work in progress. So far the project has a catalog of every badge (`data/badges.json`), documented in [docs/badges.md](docs/badges.md), a JavaScript library that draws them, and an admin page that loads your badges from your WordPress.org profile.
 
 ## The plugin
 
-Requires WordPress 6.6 or later. Once active, **Tools → WordPress.org Badges** lets you pick any badge, a size and a format (PNG or SVG), shows a preview and downloads the image. The page is a proof of concept of the WordPress integration; loading your own badges from your profile comes later.
+Requires WordPress 6.6 or later. Once active, **Tools → WordPress.org Badges** has two tabs:
+
+- **My badges**: enter a WordPress.org username and the page loads the badges of that profile. Pick one, choose a size and a format (PNG or SVG), preview it and download it. The page remembers the last username. If the profile has a badge the plugin does not know, a notice says so: the badge catalog needs updating (see below).
+- **Any badge**: the same for any badge in the catalog, for example a team badge for a contributor day.
+
+WordPress.org has no public API for badges, so the plugin reads the groups tab of the profile (`https://profiles.wordpress.org/<username>/groups/`) on the server, through its REST route `GET /wp-json/cute-wp-badges/v1/badges/<username>`, and keeps the result for 12 hours. Add `?refresh=true` (or use the link under the badges) to read the profile again. The route needs the `upload_files` capability.
 
 ## The badge library
 

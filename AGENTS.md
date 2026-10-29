@@ -22,13 +22,14 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 
 - Check the environment with the skill's `check-env.mjs` at the start of a session.
 - WordPress Coding Standards: `composer install` once, then `composer lint` before every commit that touches PHP.
-- Test sites: Playground for day-to-day work (`npx @wp-playground/cli@latest server --blueprint ./blueprint.json --mount-dir . /wordpress/wp-content/plugins/cute-wp-badges`), Studio when data must persist. Login `admin` / `password`. Start one only when Nilo asks for it, with `--site-url http://<IP>:9400` using this machine's Tailscale IP (`tailscale ip -4`), or its LAN IP if it has none, and give him the URL.
+- Test sites: Nilo's site is in Studio (see [docs/HANDOFF.md](docs/HANDOFF.md#testing)); when he asks for a test site, use it. Playground only when he asks for it (`npx @wp-playground/cli@latest server --blueprint ./blueprint.json --mount-dir . /wordpress/wp-content/plugins/cute-wp-badges`), with `--site-url http://<IP>:9400` using this machine's Tailscale IP (`tailscale ip -4`), or its LAN IP if it has none. Login `admin` / `password`. Start a site only when Nilo asks for it, and give him the URL.
 - `assets/` and `assets-src/` are reserved for the WordPress.org directory images, as the skill says, even if the plugin is only on GitHub for now. The plugin's own files (icons, scripts) live in `resources/`. Development files are `export-ignore` in `.gitattributes`.
 
 ## Layout
 
 - `cute-wp-badges.php`: main plugin file.
-- `includes/admin-page.php`: the Tools → WordPress.org Badges page. It registers the library as the script module `@cute-wp-badges/cute-wp-badges` and loads `resources/js/admin-page.js` and `resources/css/admin-page.css`.
+- `includes/admin-page.php`: the Tools → WordPress.org Badges page, with the tabs "My badges" and "Any badge". It registers the library as the script module `@cute-wp-badges/cute-wp-badges` and the shared output as `@cute-wp-badges/badge-output` (`resources/js/badge-output.js`), and loads the current tab's script (`resources/js/profile-tab.js` or `resources/js/any-tab.js`) and `resources/css/admin-page.css`.
+- `includes/profile-badges.php`: the REST route `GET /cute-wp-badges/v1/badges/<username>`, which reads a user's badges from their WordPress.org profile on the server, with a 12-hour cache.
 - `data/badges.json`: catalog of every badge. Fields and sources in [docs/badges.md](docs/badges.md).
 - `resources/js/cute-wp-badges.js`: the badge library (`renderBadge()`), for the browser and Node. Usage in the README. Written to the WordPress JavaScript coding standards.
 - `scripts/render-samples.mjs`: renders every badge with the library into `samples/` (`npm run samples`) and the grid to compare with `docs/reference-badges.png`, Nilo's reference image of the old style.

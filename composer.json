@@ -15,8 +15,10 @@
 		"fix": "phpcbf",
 		"update-badges": [
 			"node scripts/update-badges.mjs",
+			"@build-badges",
 			"@validate-badges"
 		],
+		"build-badges": "node scripts/build-badges.mjs",
 		"validate-badges": [
 			"node scripts/validate-badges.mjs",
 			"node scripts/build-preview.mjs"
@@ -25,7 +27,8 @@
 	"scripts-descriptions": {
 		"lint": "Checks the PHP code against the WordPress Coding Standards.",
 		"fix": "Fixes what can be fixed automatically in the PHP code.",
-		"update-badges": "Updates the badge catalog and icons from WordPress.org, then validates them.",
+		"update-badges": "Updates the badge catalog and icons from WordPress.org, composes the badges and validates them.",
+		"build-badges": "Composes every badge into a clean SVG file in resources/badges/.",
 		"validate-badges": "Checks the badge catalog and rebuilds preview.html."
 	}
 }

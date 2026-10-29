@@ -120,6 +120,8 @@ function tint( hex, amount ) {
  *
  * Every fill and stroke color in the icon becomes the badge color, the way
  * WordPress.org paints its icons with a CSS mask. "none" stays "none".
+ * <style> elements are removed: their rules are global, so in a document with
+ * several badges they would paint every icon.
  *
  * @param {string} iconSvg SVG markup of the icon.
  * @param {string} color   Badge color.
@@ -136,8 +138,12 @@ function iconElement( iconSvg, color, size ) {
 	const groupFill = rootFill && rootFill[ 1 ] === 'none' ? 'none' : color;
 
 	let body = iconSvg.slice( open.index + open[ 0 ].length, iconSvg.lastIndexOf( '</svg>' ) );
+	body = body.replace( /<style\b[\s\S]*?<\/style>/g, '' );
 	body = body.replace( /\s(fill|stroke)=(["'])(.*?)\2/g, ( match, attribute, quote, value ) =>
 		value === 'none' ? match : ` ${ attribute }="${ color }"`
+	);
+	body = body.replace( /\b(fill|stroke)\s*:\s*([^;"']+)/g, ( match, property, value ) =>
+		value.trim() === 'none' ? match : `${ property }:${ color }`
 	);
 
 	const offset = ( VIEWBOX - size ) / 2;

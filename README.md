@@ -31,18 +31,29 @@ You need Git, Node.js 18 or later and Composer.
    - `COLOR`: the catalog and the profile CSS disagree on a color. Nothing is changed. Check the profile badges handbook (https://make.wordpress.org/meta/handbook/tutorials-guides/profile-badges/) and decide.
    - `CLASS`: a badge class in the profile CSS that no badge uses, usually a sign of a new badge.
 
-3. Complete the new badges by hand in `data/badges.json`. Usually that means `teamUrl` (the team's page) and, for Dashicons, `icon`, which the handbook lists for each team. Every field is described in [docs/badges.md](docs/badges.md). Then check the catalog again:
+3. Complete the new badges by hand in `data/badges.json`. Usually that means `teamUrl` (the team's page) and, for Dashicons, `icon`, which the handbook lists for each team. Every field is described in [docs/badges.md](docs/badges.md).
+
+4. Validate the catalog:
 
    ```bash
    composer validate-badges
    ```
 
-   Repeat until it reports no errors, and open `preview.html` in a browser to check the new badges by eye.
+   If it reports errors, go back to step 3 and run it again until it reports none. Then open `preview.html` in a browser to check the new badges by eye.
 
-4. Raise the plugin version in the `Version:` header of `cute-wp-badges.php`, commit, and build the plugin zip:
+5. Raise the plugin version in the `Version:` header of `cute-wp-badges.php` and commit everything, saying that the badge catalog was updated:
+
+   ```bash
+   git add -A
+   git commit -m "Update the badge catalog"
+   ```
+
+   Commit before building the zip: `git archive` only packs committed files, and reads the `.gitattributes` of the commit to decide what to leave out.
+
+6. Build the plugin zip:
 
    ```bash
    git archive --format=zip --prefix=cute-wp-badges/ -o cute-wp-badges-<version>.zip HEAD
    ```
 
-   Only committed files go into the zip, and development files are left out (see `.gitattributes`).
+   Development files are left out (see `.gitattributes`).

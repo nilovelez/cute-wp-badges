@@ -28,12 +28,18 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 ## Layout
 
 - `cute-wp-badges.php`: main plugin file.
-- `includes/admin-page.php`: the Tools → WordPress.org Badges page, with the tabs "My badges" and "Any badge". It registers the library as the script module `@cute-wp-badges/cute-wp-badges` and the shared output as `@cute-wp-badges/badge-output` (`resources/js/badge-output.js`), and loads the current tab's script (`resources/js/profile-tab.js` or `resources/js/any-tab.js`) and `resources/css/admin-page.css`.
+- `includes/admin-page.php`: the Tools → WordPress.org Badges page, with the tabs "My badges" and "Any badge" and the editor they share (pick, order, image). It prints the page settings (REST URLs, saved state, strings) in `data-settings`, registers the script modules and loads the current tab's script and `resources/css/admin-page.css`.
 - `includes/profile-badges.php`: the REST route `GET /cute-wp-badges/v1/badges/<username>`, which reads a user's badges from their WordPress.org profile on the server, with a 12-hour cache.
+- `includes/badge-state.php`: the REST route `POST /cute-wp-badges/v1/state/<tab>`, which saves each tab's state per user in user meta.
+- `resources/js/`: script modules, written to the WordPress JavaScript coding standards, no build step:
+  - `cute-wp-badges.js`: the badge library (`renderBadge()`, `renderGrid()`), for the browser and Node. Usage in the README.
+  - `badge-store.js`: the state of the current tab and its saving; every other module reads and changes the state through it.
+  - `badge-picker.js`, `badge-order.js`, `badge-output.js`: the three parts of the editor.
+  - `profile-tab.js`, `any-tab.js`: the source of each tab.
 - `data/badges.json`: catalog of every badge. Fields and sources in [docs/badges.md](docs/badges.md).
-- `resources/js/cute-wp-badges.js`: the badge library (`renderBadge()`), for the browser and Node. Usage in the README. Written to the WordPress JavaScript coding standards.
-- `scripts/render-samples.mjs`: renders every badge with the library into `samples/` (`npm run samples`) and the grid to compare with `docs/reference-badges.png`, Nilo's reference image of the old style.
-- `resources/icons/`: every badge icon as an SVG file, in `dashicons/` (the whole Dashicons set) and `custom/` (team icons from the WordPress.org profile CSS). See its README.
+- `resources/badges/`: every badge as a finished, sanitized SVG file, built by `scripts/build-badges.mjs` (`composer build-badges`) with `scripts/compose-badge.mjs`. Never edit them by hand.
+- `resources/icons/`: the source icons of the badges, in `dashicons/` (the whole Dashicons set) and `custom/` (team icons from the WordPress.org profile CSS). Not in the plugin zip. See its README.
+- `scripts/render-samples.mjs`: renders every badge and two grids with the library into `samples/` (`npm run samples`), one of them to compare with `docs/reference-badges.png`, Nilo's reference image of the old style.
 - `scripts/update-badges.mjs`: updates the catalog and the icons from WordPress.org (`composer update-badges`). The process is documented in the README.
-- `scripts/validate-badges.mjs`: checks the catalog (`composer validate-badges`, which also rebuilds `preview.html`). Run it after every change to the catalog.
+- `scripts/validate-badges.mjs`: checks the catalog and that every badge file is up to date and clean (`composer validate-badges`, which also rebuilds `preview.html`). Run `composer build-badges` and then this after every change to the catalog or the icons.
 - `docs/wporg-profile-api.md`: how to get a user's badges from WordPress.org.

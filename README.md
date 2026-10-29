@@ -2,16 +2,20 @@
 
 WordPress plugin that generates images of WordPress.org profile badges, in the classic profile style.
 
-Work in progress. So far the project has a catalog of every badge (`data/badges.json`), documented in [docs/badges.md](docs/badges.md), a JavaScript library that draws them, and an admin page that loads your badges from your WordPress.org profile.
+Work in progress. So far the project has a catalog of every badge (`data/badges.json`), documented in [docs/badges.md](docs/badges.md), the badges as finished SVG files, a JavaScript library that lays them out, and an admin page that loads your badges from your WordPress.org profile and turns them into a single badge or a grid, as PNG or SVG.
 
 ## The plugin
 
 Requires WordPress 6.6 or later. Once active, **Tools → WordPress.org Badges** has two tabs:
 
-- **My badges**: enter a WordPress.org username and the page loads the badges of that profile. Pick one, choose a size and a format (PNG or SVG), preview it and download it. The page remembers the last username. If the profile has a badge the plugin does not know, a notice says so: the badge catalog needs updating (see below).
-- **Any badge**: the same for any badge in the catalog, for example a team badge for a contributor day.
+- **My badges**: enter a WordPress.org username and the page loads the badges of that profile. If the profile has a badge the plugin does not know, a notice says so: the badge catalog needs updating (see below).
+- **Any badge**: every badge in the catalog, with a search field and a "Team badges only" filter, for example to get a team badge for a contributor day.
 
-WordPress.org has no public API for badges, so the plugin reads the groups tab of the profile (`https://profiles.wordpress.org/<username>/groups/`) on the server, through its REST route `GET /wp-json/cute-wp-badges/v1/badges/<username>`, and keeps the result for 12 hours. Add `?refresh=true` (or use the link under the badges) to read the profile again. The route needs the `upload_files` capability.
+Both tabs work the same way: pick badges (with "All" and "None"), put them in order (drag them, use the arrows, or sort by profile order, name or team), and get one image. One badge gives that badge alone; several give a grid, with the number of columns, the badge size and the gap between badges. The background is always transparent. Download it as PNG, or as SVG, which scales to any size.
+
+The page saves each tab as you leave it, per WordPress user: the username, the picked badges, their order and the image options. The first time, "My badges" picks every badge of the profile. After that it keeps your picks and order: a badge that is new on your profile shows up unpicked and marked as new, ready to add at the end, and a badge gone from your profile is taken out, with a notice.
+
+WordPress.org has no public API for badges, so the plugin reads the groups tab of the profile (`https://profiles.wordpress.org/<username>/groups/`) on the server, through its REST route `GET /wp-json/cute-wp-badges/v1/badges/<username>`, and keeps the result for 12 hours. Add `?refresh=true` (or use the link under the username) to read the profile again. The saved state goes through `POST /wp-json/cute-wp-badges/v1/state/<tab>`. Both routes need the `upload_files` capability.
 
 ## The badges
 

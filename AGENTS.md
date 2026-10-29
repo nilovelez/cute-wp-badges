@@ -22,7 +22,7 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 
 - Check the environment with the skill's `check-env.mjs` at the start of a session.
 - WordPress Coding Standards: `composer install` once, then `composer lint` before every commit that touches PHP.
-- Test sites: Playground for day-to-day work (`npx @wp-playground/cli@latest server --blueprint ./blueprint.json --mount-dir . /wordpress/wp-content/plugins/cute-wp-badges`), Studio when data must persist. Login `admin` / `password`. Start one only when Nilo asks for it.
+- Test sites: Playground for day-to-day work (`npx @wp-playground/cli@latest server --blueprint ./blueprint.json --mount-dir . /wordpress/wp-content/plugins/cute-wp-badges`), Studio when data must persist. Login `admin` / `password`. Start one only when Nilo asks for it, with `--site-url http://<IP>:9400` using this machine's Tailscale IP (`tailscale ip -4`), or its LAN IP if it has none, and give him the URL.
 - `assets/` and `assets-src/` are reserved for the WordPress.org directory images, as the skill says, even if the plugin is only on GitHub for now. The plugin's own files (icons, scripts) live in `resources/`. Development files are `export-ignore` in `.gitattributes`.
 
 ## Layout

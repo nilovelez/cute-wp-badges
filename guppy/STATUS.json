@@ -3,9 +3,9 @@
   "title": "Cute WP Badges",
   "description": "Image generator for WordPress profile badges.",
   "status": "active",
-  "status_text": "A first admin page draws any of the 67 WordPress.org badges as PNG or SVG and downloads it; in review. Next: loading a user's own badges from their profile.",
-  "last_update": "2026-10-29 18:44:23 +0100",
-  "last_update_unix": 1793295863,
+  "status_text": "A first admin page draws any of the 67 WordPress.org badges as PNG or SVG and downloads it. Next: loading a user's own badges from their profile.",
+  "last_update": "2026-10-29 19:23:14 +0100",
+  "last_update_unix": 1793298194,
   "url": "https://github.com/nilovelez/cute-wp-badges",
   "status_url": "https://raw.githubusercontent.com/nilovelez/cute-wp-badges/main/guppy/STATUS.md",
   "icon": null

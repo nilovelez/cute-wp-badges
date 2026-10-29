@@ -10,6 +10,6 @@ The project is a WordPress plugin, published on GitHub only (not in the WordPres
 
 Later, not yet planned in detail:
 
-- Loading the user's badges: a REST endpoint in the plugin that reads `https://profiles.wordpress.org/<username>/groups/?num=100` on the server, with a cache.
+- Loading the user's badges: a REST endpoint in the plugin that reads `https://profiles.wordpress.org/<username>/groups/?num=100` on the server, with a cache. If the profile has a badge that is not in the catalog, the plugin shows a notice saying that a badge it does not know was found and that the plugin needs updating (see "Updating the badge catalog" in the README).
 - A grid editor: pick badges and lay them out (for example, five columns), like Nilo's reference image.
 - Uploading the generated image to the Media Library through the WordPress REST API: PNG by default, SVG only if the user turns on an option.

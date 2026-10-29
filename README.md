@@ -2,7 +2,26 @@
 
 WordPress plugin that generates images of WordPress.org profile badges, in the classic profile style.
 
-Work in progress. So far the project has a catalog of every badge (`data/badges.json`), documented in [docs/badges.md](docs/badges.md).
+Work in progress. So far the project has a catalog of every badge (`data/badges.json`), documented in [docs/badges.md](docs/badges.md), and a JavaScript library that draws them.
+
+## The badge library
+
+`resources/js/cute-wp-badges.js` draws any badge of the catalog as SVG or PNG. It is a plain ES module with no build step, and works in the browser and in Node 18 or later:
+
+```js
+import { renderBadge } from './resources/js/cute-wp-badges.js';
+
+const svg = await renderBadge( 'translation-contributor' );                             // SVG markup, 128 px
+const png = await renderBadge( 'translation-contributor', { format: 'png', size: 500 } ); // PNG image
+```
+
+- `renderBadge( id, { format, size } )`: `id` is the badge id (the WordPress.org association slug) or one of its aliases; `format` is `'svg'` (default) or `'png'`; `size` is the width and height in pixels, from 1 to 4096 (default 128). It returns the SVG markup as a string, or the PNG as a `Blob` in the browser and a `Buffer` in Node. It throws on an unknown badge, format or size.
+- `getBadges()`: every badge in the catalog. `getBadge( id )`: one badge, or `null`.
+- `buildBadgeSvg( badge, iconSvg, size )`: builds the SVG from a badge and its icon, without reading any file.
+
+The library reads the catalog and the icons relative to its own file, so it has to stay in the plugin folder structure. In the browser, PNG output is drawn with a canvas. In Node it needs `@resvg/resvg-js`: run `npm install` in the repo.
+
+To check it by eye, `npm run samples` renders every badge into `samples/` (not committed): one SVG and one PNG per badge, a sheet with all of them, and `reference-grid.png`, the badges of [docs/reference-badges.png](docs/reference-badges.png) in the same order to compare with it.
 
 ## Updating the badge catalog
 

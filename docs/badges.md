@@ -47,7 +47,9 @@ The profile CSS still contains the rules of the old badge style that this projec
 - A 32 px circle with a 2 px white border and a 4 px ring in the badge color outside it (`box-shadow: 0 0 0 4px`).
 - Team badges (`has-overlay`) fill the circle with the badge color at 25% opacity. Contributor badges have a white fill.
 - The icon is drawn in the badge color: a 24 px Dashicon, or a custom SVG at 22 px.
-- Some Dashicons get a 1 px nudge for optical centering (`admin-appearance`, `admin-plugins`, `art`, `format-chat`, `tickets`, `cloud`, `admin-site-alt3`).
+- Some Dashicons get a 1 px nudge for optical centering (`admin-appearance`, `admin-plugins`, `art`, `format-chat`, `tickets`, `cloud`, `admin-site-alt3`). The badge library does not apply these nudges.
+
+Compared with Nilo's reference image of the old style (`docs/reference-badges.png`), the library output matches in ring, border, tint and icon size and position. Two differences come from the old site: the old BuddyPress badge had a light grey fill, and the team tint of the reference is very slightly darker than the badge color at 25% opacity that the current CSS defines.
 
 ## Open points
 

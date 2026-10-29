@@ -2,6 +2,9 @@
 /vendor/
 node_modules/
 
+# Badge samples rendered by `npm run samples`.
+/samples/
+
 # Release zips built with `git archive`.
 /*.zip
 

@@ -1,0 +1,13 @@
+{
+  "name": "cute-wp-badges",
+  "private": true,
+  "description": "Development tools for Cute WP Badges. Not part of the plugin package.",
+  "license": "GPL-2.0-or-later",
+  "type": "module",
+  "scripts": {
+    "samples": "node scripts/render-samples.mjs"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

@@ -29,6 +29,8 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 
 - `cute-wp-badges.php`: main plugin file.
 - `data/badges.json`: catalog of every badge. Fields and sources in [docs/badges.md](docs/badges.md).
+- `resources/js/cute-wp-badges.js`: the badge library (`renderBadge()`), for the browser and Node. Usage in the README. Written to the WordPress JavaScript coding standards.
+- `scripts/render-samples.mjs`: renders every badge with the library into `samples/` (`npm run samples`) and the grid to compare with `docs/reference-badges.png`, Nilo's reference image of the old style.
 - `resources/icons/`: every badge icon as an SVG file, in `dashicons/` (the whole Dashicons set) and `custom/` (team icons from the WordPress.org profile CSS). See its README.
 - `scripts/update-badges.mjs`: updates the catalog and the icons from WordPress.org (`composer update-badges`). The process is documented in the README.
 - `scripts/validate-badges.mjs`: checks the catalog (`composer validate-badges`, which also rebuilds `preview.html`). Run it after every change to the catalog.

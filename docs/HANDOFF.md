@@ -11,10 +11,12 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Milestone 2, the badge library (see [PLAN.md](PLAN.md)). Do not start it until Nilo says so.
+Milestone 2 (badge library) is done and waiting for Nilo's review. Do not start milestone 3 until he says so.
+
+Milestone 2 was tested in Node (`npm run samples`) and in headless Chrome. For the browser test, `--dump-dom` is not reliable: it can dump the page before asynchronous code finishes. Polling the page through the DevTools protocol (`--remote-debugging-port`) works.
 
 ## Reference
 
-- Nilo's reference image of the old style: his own badges in a five-column grid. It is not in the repo yet.
+- Nilo's reference image of the old style: `docs/reference-badges.png`, his own badges in a five-column grid.
 - Profile badges handbook: https://make.wordpress.org/meta/handbook/tutorials-guides/profile-badges/
 - Nilo's profile: https://profiles.wordpress.org/nilovelez/

@@ -11,7 +11,7 @@ An image generator for WordPress.org profile badges, drawn in the old profile st
 - Nilo runs the project and sets the pace. Do not make assumptions or fire off lists of questions; listen, and ask only what blocks the work.
 - Talk to Nilo in Spanish. Everything in the repo is in US English: code, names, comments, docs, README, commit messages.
 - Work goes milestone by milestone ([docs/PLAN.md](docs/PLAN.md)). Start a milestone only when Nilo says so: explain what you will do, do it, then stop for his review. Never chain milestones.
-- One branch per milestone (`git switch -c <type>/<short-name>`), no pull requests. When Nilo approves: `git merge --no-ff` into `main`, push and delete the branch, local and remote. Push only when he asks.
+- Work directly on `main`: no feature branches, no pull requests. Push only when Nilo asks.
 - Keep the agent docs in the repo so any agent can pick the work up: update [docs/HANDOFF.md](docs/HANDOFF.md) at the end of every session.
 
 ## Layout

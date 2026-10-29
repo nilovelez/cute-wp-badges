@@ -11,7 +11,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Milestone 2 (badge library) is done and waiting for Nilo's review. Do not start milestone 3 until he says so.
+Milestone 2 (badge library) is done and approved: `resources/js/cute-wp-badges.js` draws any badge as SVG or PNG, with a transparent background outside the badge. Icon `<style>` elements are stripped, since their rules would leak into every badge in the same document. Next is milestone 3 (plugin skeleton and badge page); do not start it until Nilo says so.
 
 Milestone 2 was tested in Node (`npm run samples`) and in headless Chrome. For the browser test, `--dump-dom` is not reliable: it can dump the page before asynchronous code finishes. Polling the page through the DevTools protocol (`--remote-debugging-port`) works.
 

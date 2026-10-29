@@ -23,7 +23,7 @@ You need Git, Node.js 18 or later and Composer.
    composer update-badges
    ```
 
-   It reads the official list of badges (https://profiles.wordpress.org/associations/) and the WordPress.org profile CSS, updates `data/badges.json` and the icons in `resources/icons/`, validates the catalog and rebuilds `preview.html`. It prints what changed:
+   It reads the official list of badges (https://profiles.wordpress.org/associations/) and the WordPress.org profile CSS, updates `data/badges.json` and the team icons in `resources/icons/custom/`, validates the catalog and rebuilds `preview.html`. It prints what changed:
 
    - `NEW`: a badge that was not in the catalog. It is added with what can be worked out automatically. The fields it could not work out are left empty (`null`).
    - `RENAMED`: a badge whose name changed on WordPress.org. The new name is applied.
@@ -39,7 +39,7 @@ You need Git, Node.js 18 or later and Composer.
    composer validate-badges
    ```
 
-   If it reports errors, go back to step 3 and run it again until it reports none. Then open `preview.html` in a browser to check the new badges by eye.
+   It checks every field and that each badge's icon file exists in `resources/icons/`, and updates the list of Dashicons that go into the zip in `.gitattributes`. If it reports errors, go back to step 3 and run it again until it reports none. Then open `preview.html` in a browser to check the new badges by eye.
 
 5. Raise the plugin version in the `Version:` header of `cute-wp-badges.php` and commit everything, saying that the badge catalog was updated:
 

@@ -12,7 +12,7 @@
 | `teamUrl` | string | Full URL of the team's page. Usually its make.wordpress.org site (`https://make.wordpress.org/tv/`); teams without one point to their own site (`https://buddypress.org/`). |
 | `wporgClass` | string | CSS class WordPress.org puts on the badge in the profile HTML (`badge-code`). Not unique: `badge-organizer` is used by both Meetup Organizer and WordCamp Organizer. |
 | `color` | string | Badge color, lowercase hex. |
-| `icon` | object | `{ "type": "dashicon", "name": "editor-code" }` for a Dashicon (`dashicons-editor-code`), or `{ "type": "svg", "name": "playground" }` for a custom SVG that WordPress.org ships in its profile CSS (`--svg-badge-playground`). |
+| `icon` | object | `{ "type": "dashicon", "name": "editor-code" }` for a Dashicon (`resources/icons/dashicons/editor-code.svg`), or `{ "type": "svg", "name": "playground" }` for a custom team icon that WordPress.org ships in its profile CSS as `--svg-badge-playground` (`resources/icons/custom/playground.svg`). |
 | `isTeam` | boolean | `true` for team-level badges, drawn with a tinted background (the badge color at 25% opacity). `false` for contributor-level badges, drawn on white. |
 | `aliases` | array | Other keys WordPress.org code has used for the same badge (`polyglots-team` for Translation Editor). |
 | `verified` | boolean | `true` when the badge's CSS class and icon have been seen on a live profile. `false` when they come from the handbook and the profile CSS only. The `id` and `name` of every badge are confirmed against the associations directory. |

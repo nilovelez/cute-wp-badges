@@ -1,4 +1,4 @@
-// Updates data/badges.json and resources/icons/ from WordPress.org.
+// Updates data/badges.json and resources/icons/custom/ from WordPress.org.
 //
 // Reads the associations directory (the official list of badges) and the
 // profile theme CSS (classes, colors and custom SVG icons). Hand-checked
@@ -11,7 +11,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
 const root = new URL('../', import.meta.url);
 const catalogFile = new URL('data/badges.json', root);
-const iconsDir = new URL('resources/icons/', root);
+const iconsDir = new URL('resources/icons/custom/', root);
 
 const ASSOCIATIONS_URL = 'https://profiles.wordpress.org/associations/?num=200';
 const CSS_URL = 'https://profiles.wordpress.org/wp-content/themes/profiles.wordpress.org/style.css';

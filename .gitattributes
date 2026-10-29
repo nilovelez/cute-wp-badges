@@ -10,8 +10,6 @@
 
 # Development files, excluded from `git archive` (the release zip).
 # Add here any other file or folder that is not part of the plugin.
-# assets/ is not excluded: it holds the plugin's own icons and fonts. The
-# plugin is not published on WordPress.org, so there are no directory assets.
 /.gitattributes  export-ignore
 /.gitignore      export-ignore
 /.github         export-ignore
@@ -23,6 +21,8 @@
 /composer.json   export-ignore
 /composer.lock   export-ignore
 /phpcs.xml.dist  export-ignore
+/assets          export-ignore
+/assets-src      export-ignore
 /docs            export-ignore
 /guppy           export-ignore
 /scripts         export-ignore

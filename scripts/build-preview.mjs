@@ -1,5 +1,6 @@
 // Builds preview.html, a static table that draws every badge in
-// data/badges.json with plain CSS, to check the catalog by eye.
+// data/badges.json with plain CSS, next to its composed SVG file from
+// resources/badges/, to check the catalog and the composed badges by eye.
 // Usage: node scripts/build-preview.mjs
 import { readFileSync, writeFileSync } from 'node:fs';
 
@@ -19,9 +20,14 @@ const icon = ({ type, name }) =>
     ? `<span class="icon dashicon" style="--icon:${svgUrl('dashicons', name)}"></span>`
     : `<span class="icon svg" style="--icon:${svgUrl('custom', name)}"></span>`;
 
+// The composed badge file, as the plugin ships it.
+const badgeUrl = (id) =>
+  `data:image/svg+xml,${encodeURIComponent(readFileSync(new URL(`resources/badges/${id}.svg`, root), 'utf8').trim())}`;
+
 const row = (b) => `
       <tr>
         <td><span class="badge${b.isTeam ? ' is-team' : ''}" style="--badge-color:${b.color}">${icon(b.icon)}</span></td>
+        <td><img class="composed" src="${badgeUrl(b.id)}" alt=""></td>
         <td>${esc(b.name)}</td>
         <td><code>${esc(b.id)}</code>${b.aliases.map((a) => `<br><code class="alias">${esc(a)}</code>`).join('')}</td>
         <td><a href="${esc(b.teamUrl)}">${esc(b.team)}</a></td>
@@ -76,6 +82,7 @@ const html = `<!doctype html>
       -webkit-mask: var(--icon) center / contain no-repeat;
     }
     .badge .dashicon { width: calc(24px * var(--s)); height: calc(24px * var(--s)); }
+    .composed { display: block; width: 120px; height: 120px; }
   </style>
 </head>
 <body>
@@ -83,7 +90,7 @@ const html = `<!doctype html>
   <p>${badges.length} badges from <code>data/badges.json</code>.</p>
   <table>
     <thead>
-      <tr><th>Badge</th><th>Name</th><th>id / aliases</th><th>Team</th><th>WordPress.org class</th><th>Color</th><th>Icon</th><th>Type</th><th>Verified</th></tr>
+      <tr><th>CSS</th><th>Composed SVG</th><th>Name</th><th>id / aliases</th><th>Team</th><th>WordPress.org class</th><th>Color</th><th>Icon</th><th>Type</th><th>Verified</th></tr>
     </thead>
     <tbody>${badges.map(row).join('')}
     </tbody>

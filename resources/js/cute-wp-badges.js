@@ -1,40 +1,30 @@
 /**
- * Cute WP Badges: draws WordPress.org profile badges in the classic profile
- * style, as SVG or PNG. Works in the browser and in Node 18+.
+ * Cute WP Badges: WordPress.org profile badges in the classic profile style,
+ * one by one or in a grid, as SVG or PNG. Works in the browser and in Node 18+.
  *
- *     import { renderBadge } from './cute-wp-badges.js';
- *     const png = await renderBadge( 'translation-contributor', { format: 'png', size: 500 } );
+ *     import { renderBadge, renderGrid } from './cute-wp-badges.js';
+ *     const svg = await renderBadge( 'translation-contributor' );
+ *     const png = await renderGrid( [ 'core-contributor', 'polyglots-team' ], { format: 'png', columns: 5 } );
  *
- * In the browser, PNG output is a Blob drawn with a canvas. In Node it is a
- * Buffer drawn with @resvg/resvg-js, which has to be installed.
+ * The badges are finished SVG files in ../badges/, composed and sanitized by
+ * scripts/build-badges.mjs. This library only reads them, lays them out and
+ * rasterizes them: in the browser with a canvas (PNG output is a Blob), in
+ * Node with @resvg/resvg-js, which has to be installed (a Buffer).
  *
- * The badge catalog and the icons are read from the plugin folder, relative
- * to this file: ../../data/badges.json and ../icons/.
+ * The catalog and the badges are read relative to this file:
+ * ../../data/badges.json and ../badges/.
  *
  * @package Cute_WP_Badges
  */
 
 const CATALOG_URL = new URL( '../../data/badges.json', import.meta.url );
-const ICONS_URL = new URL( '../icons/', import.meta.url );
-const ICON_FOLDERS = { dashicon: 'dashicons', svg: 'custom' };
+const BADGES_URL = new URL( '../badges/', import.meta.url );
 
 const MAX_SIZE = 4096;
-
-/*
- * Geometry of the old profile badge, in CSS pixels of the original 32 px
- * badge (see "Old badge style" in docs/badges.md): a 32 px circle with a
- * 2 px white border, a 4 px ring outside it, a 24 px Dashicon or a 22 px
- * custom icon. The whole badge, ring included, is 40 px wide.
- */
-const VIEWBOX = 40;
-const RING_RADIUS = 20;
-const BORDER_RADIUS = 16;
-const FILL_RADIUS = 14;
-const ICON_SIZE = { dashicon: 24, svg: 22 };
-const TINT = 0.25;
+const MAX_IMAGE = 8192;
 
 let catalogPromise = null;
-const iconCache = new Map();
+const svgCache = new Map();
 
 /**
  * Reads a text file next to this module: with fetch() in the browser, or
@@ -84,115 +74,78 @@ export async function getBadge( id ) {
 }
 
 /**
- * Loads the SVG of a badge icon.
+ * Loads the composed SVG file of a badge.
  *
- * @param {Object} icon Icon from the catalog: { type, name }.
- * @return {Promise<string>} SVG markup.
+ * @param {string} id Badge id or alias.
+ * @return {Promise<string>} SVG markup, exactly as in the file.
  */
-async function loadIcon( icon ) {
-	const key = `${ icon.type }/${ icon.name }`;
-	if ( ! iconCache.has( key ) ) {
-		const url = new URL( `${ ICON_FOLDERS[ icon.type ] }/${ icon.name }.svg`, ICONS_URL );
-		iconCache.set( key, loadText( url ) );
+async function loadBadgeSvg( id ) {
+	const badge = await getBadge( id );
+	if ( ! badge ) {
+		throw new Error( `Unknown badge "${ id }".` );
 	}
-	return iconCache.get( key );
+	if ( ! svgCache.has( badge.id ) ) {
+		svgCache.set( badge.id, loadText( new URL( `${ badge.id }.svg`, BADGES_URL ) ) );
+	}
+	return svgCache.get( badge.id );
 }
 
 /**
- * Mixes a color with white, like a semi-transparent color on a white background.
+ * Checks that a value is a whole number within limits.
  *
- * @param {string} hex    Color, #rrggbb.
- * @param {number} amount How much of the color to keep, from 0 to 1.
- * @return {string} The mixed color, #rrggbb.
+ * @param {number} value Value to check.
+ * @param {string} name  Name of the option, for the error message.
+ * @param {number} min   Smallest value allowed.
+ * @param {number} max   Largest value allowed.
  */
-function tint( hex, amount ) {
-	let result = '#';
-	for ( let i = 1; i < 7; i += 2 ) {
-		const channel = parseInt( hex.slice( i, i + 2 ), 16 );
-		const mixed = Math.round( 255 - ( 255 - channel ) * amount );
-		result += mixed.toString( 16 ).padStart( 2, '0' );
+function checkWholeNumber( value, name, min, max ) {
+	if ( ! Number.isInteger( value ) || value < min || value > max ) {
+		throw new Error( `${ name } must be a whole number from ${ min } to ${ max }.` );
 	}
-	return result;
 }
 
 /**
- * Turns an icon file into a nested <svg> painted in one color.
+ * Checks the output format.
  *
- * Every fill and stroke color in the icon becomes the badge color, the way
- * WordPress.org paints its icons with a CSS mask. "none" stays "none".
- * <style> elements are removed: their rules are global, so in a document with
- * several badges they would paint every icon.
+ * @param {string} format Format.
+ */
+function checkFormat( format ) {
+	if ( format !== 'svg' && format !== 'png' ) {
+		throw new Error( `Unknown format "${ format }": use "svg" or "png".` );
+	}
+}
+
+/**
+ * Sets the width and height of an SVG, so it has an intrinsic size when it
+ * is drawn as an image.
  *
- * @param {string} iconSvg SVG markup of the icon.
- * @param {string} color   Badge color.
- * @param {number} size    Icon size, in viewbox units.
+ * @param {string} svg    SVG markup.
+ * @param {number} width  Width, in pixels.
+ * @param {number} height Height, in pixels.
  * @return {string} SVG markup.
  */
-function iconElement( iconSvg, color, size ) {
-	const open = iconSvg.match( /<svg\b[^>]*>/ );
-	if ( ! open ) {
-		throw new Error( 'The icon is not an SVG file.' );
-	}
-	const viewBox = open[ 0 ].match( /viewBox=["']([^"']+)["']/ );
-	const rootFill = open[ 0 ].match( /\sfill=["']([^"']+)["']/ );
-	const groupFill = rootFill && rootFill[ 1 ] === 'none' ? 'none' : color;
-
-	let body = iconSvg.slice( open.index + open[ 0 ].length, iconSvg.lastIndexOf( '</svg>' ) );
-	body = body.replace( /<style\b[\s\S]*?<\/style>/g, '' );
-	body = body.replace( /\s(fill|stroke)=(["'])(.*?)\2/g, ( match, attribute, quote, value ) =>
-		value === 'none' ? match : ` ${ attribute }="${ color }"`
-	);
-	body = body.replace( /\b(fill|stroke)\s*:\s*([^;"']+)/g, ( match, property, value ) =>
-		value.trim() === 'none' ? match : `${ property }:${ color }`
-	);
-
-	const offset = ( VIEWBOX - size ) / 2;
-	return (
-		`<svg x="${ offset }" y="${ offset }" width="${ size }" height="${ size }" viewBox="${ viewBox ? viewBox[ 1 ] : '0 0 20 20' }">` +
-		`<g fill="${ groupFill }">${ body }</g>` +
-		'</svg>'
-	);
-}
-
-/**
- * Builds the SVG of a badge. No file access: the badge and its icon are given.
- *
- * @param {Object} badge   Badge from the catalog.
- * @param {string} iconSvg SVG markup of the badge icon.
- * @param {number} size    Width and height of the image, in pixels.
- * @return {string} SVG markup.
- */
-export function buildBadgeSvg( badge, iconSvg, size ) {
-	const center = VIEWBOX / 2;
-	const fill = badge.isTeam ? tint( badge.color, TINT ) : '#ffffff';
-
-	return (
-		`<svg xmlns="http://www.w3.org/2000/svg" width="${ size }" height="${ size }" viewBox="0 0 ${ VIEWBOX } ${ VIEWBOX }" role="img" aria-label="${ badge.name.replace( /"/g, '&quot;' ) }">` +
-		`<circle cx="${ center }" cy="${ center }" r="${ RING_RADIUS }" fill="${ badge.color }"/>` +
-		`<circle cx="${ center }" cy="${ center }" r="${ BORDER_RADIUS }" fill="#ffffff"/>` +
-		`<circle cx="${ center }" cy="${ center }" r="${ FILL_RADIUS }" fill="${ fill }"/>` +
-		iconElement( iconSvg, badge.color, ICON_SIZE[ badge.icon.type ] ) +
-		'</svg>'
-	);
+function withSize( svg, width, height ) {
+	return svg.replace( /^<svg\b/, `<svg width="${ width }" height="${ height }"` );
 }
 
 /**
  * Draws an SVG into a PNG.
  *
- * @param {string} svg  SVG markup.
- * @param {number} size Width and height, in pixels.
+ * @param {string} svg    SVG markup.
+ * @param {number} width  Width, in pixels.
+ * @param {number} height Height, in pixels.
  * @return {Promise<Blob|Buffer>} PNG image: a Blob in the browser, a Buffer in Node.
  */
-async function svgToPng( svg, size ) {
+async function svgToPng( svg, width, height ) {
 	if ( typeof document !== 'undefined' ) {
 		const image = new Image();
-		image.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent( svg );
+		image.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent( withSize( svg, width, height ) );
 		await image.decode();
 
 		const canvas = document.createElement( 'canvas' );
-		canvas.width = size;
-		canvas.height = size;
-		canvas.getContext( '2d' ).drawImage( image, 0, 0, size, size );
+		canvas.width = width;
+		canvas.height = height;
+		canvas.getContext( '2d' ).drawImage( image, 0, 0, width, height );
 
 		return new Promise( ( resolve, reject ) => {
 			canvas.toBlob( ( blob ) => ( blob ? resolve( blob ) : reject( new Error( 'Cannot create the PNG.' ) ) ), 'image/png' );
@@ -200,31 +153,76 @@ async function svgToPng( svg, size ) {
 	}
 
 	const { Resvg } = await import( '@resvg/resvg-js' );
-	return new Resvg( svg, { fitTo: { mode: 'width', value: size } } ).render().asPng();
+	return new Resvg( svg, { fitTo: { mode: 'width', value: width } } ).render().asPng();
 }
 
 /**
  * Draws a badge.
  *
- * @param {string} id              Badge id (WordPress.org association slug) or alias.
- * @param {Object} options         Options.
- * @param {string} options.format  'svg' (default) or 'png'.
- * @param {number} options.size    Width and height, in pixels. Default 128.
+ * As SVG, the result is the badge file as it is: it has no fixed size, so
+ * `size` does not apply. As PNG, it is drawn `size` pixels wide and high.
+ *
+ * @param {string} id             Badge id (WordPress.org association slug) or alias.
+ * @param {Object} options        Options.
+ * @param {string} options.format 'svg' (default) or 'png'.
+ * @param {number} options.size   PNG width and height, in pixels. Default 128.
  * @return {Promise<string|Blob|Buffer>} SVG markup, or a PNG image (Blob in the browser, Buffer in Node).
  */
 export async function renderBadge( id, { format = 'svg', size = 128 } = {} ) {
-	if ( format !== 'svg' && format !== 'png' ) {
-		throw new Error( `Unknown format "${ format }": use "svg" or "png".` );
+	checkFormat( format );
+	checkWholeNumber( size, 'The size', 1, MAX_SIZE );
+
+	const svg = await loadBadgeSvg( id );
+	return format === 'svg' ? svg : svgToPng( svg, size, size );
+}
+
+/**
+ * Lays badges out in a grid, left to right and top to bottom, with a
+ * transparent background.
+ *
+ * As SVG, the result has no fixed size: `size` and `gap` only set the
+ * proportions, and each badge is its own file nested as it is. As PNG, the
+ * whole grid is drawn at `size` pixels per badge and `gap` pixels between
+ * badges. A single badge gives the same drawing as renderBadge().
+ *
+ * @param {string[]} ids             Badge ids or aliases, in order.
+ * @param {Object}   options         Options.
+ * @param {number}   options.columns Badges per row. Default 5.
+ * @param {number}   options.size    Width and height of each badge. Default 128.
+ * @param {number}   options.gap     Space between badges. Default 32.
+ * @param {string}   options.format  'svg' (default) or 'png'.
+ * @return {Promise<string|Blob|Buffer>} SVG markup, or a PNG image (Blob in the browser, Buffer in Node).
+ */
+export async function renderGrid( ids, { columns = 5, size = 128, gap = 32, format = 'svg' } = {} ) {
+	checkFormat( format );
+	if ( ! Array.isArray( ids ) || ids.length === 0 ) {
+		throw new Error( 'Pick at least one badge.' );
 	}
-	if ( ! Number.isInteger( size ) || size < 1 || size > MAX_SIZE ) {
-		throw new Error( `Size must be a whole number of pixels from 1 to ${ MAX_SIZE }.` );
+	checkWholeNumber( columns, 'The number of columns', 1, 100 );
+	checkWholeNumber( size, 'The size', 1, MAX_SIZE );
+	checkWholeNumber( gap, 'The gap', 0, MAX_SIZE );
+
+	const svgs = await Promise.all( ids.map( loadBadgeSvg ) );
+
+	const usedColumns = Math.min( columns, ids.length );
+	const rows = Math.ceil( ids.length / usedColumns );
+	const width = usedColumns * size + ( usedColumns - 1 ) * gap;
+	const height = rows * size + ( rows - 1 ) * gap;
+
+	if ( format === 'png' && ( width > MAX_IMAGE || height > MAX_IMAGE ) ) {
+		throw new Error( `The image would be ${ width } × ${ height } pixels; the limit is ${ MAX_IMAGE } on each side. Use a smaller size or gap.` );
 	}
 
-	const badge = await getBadge( id );
-	if ( ! badge ) {
-		throw new Error( `Unknown badge "${ id }".` );
+	let cells = '';
+	for ( const [ index, svg ] of svgs.entries() ) {
+		const x = ( index % usedColumns ) * ( size + gap );
+		const y = Math.floor( index / usedColumns ) * ( size + gap );
+		// The badge file, placed in its cell. Its own namespace is inherited.
+		cells += svg
+			.trim()
+			.replace( /^<svg\b[^>]*?(\sviewBox="[^"]*")[^>]*>/, `<svg x="${ x }" y="${ y }" width="${ size }" height="${ size }"$1>` );
 	}
 
-	const svg = buildBadgeSvg( badge, await loadIcon( badge.icon ), size );
-	return format === 'svg' ? svg : svgToPng( svg, size );
+	const grid = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${ width } ${ height }">${ cells }</svg>\n`;
+	return format === 'svg' ? grid : svgToPng( grid, width, height );
 }

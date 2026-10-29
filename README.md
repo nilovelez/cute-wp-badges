@@ -2,7 +2,11 @@
 
 WordPress plugin that generates images of WordPress.org profile badges, in the classic profile style.
 
-Work in progress. So far the project has a catalog of every badge (`data/badges.json`), documented in [docs/badges.md](docs/badges.md), and a JavaScript library that draws them.
+Work in progress. So far the project has a catalog of every badge (`data/badges.json`), documented in [docs/badges.md](docs/badges.md), a JavaScript library that draws them, and a first admin page to try it.
+
+## The plugin
+
+Requires WordPress 6.6 or later. Once active, **Tools → WordPress.org Badges** lets you pick any badge, a size and a format (PNG or SVG), shows a preview and downloads the image. The page is a proof of concept of the WordPress integration; loading your own badges from your profile comes later.
 
 ## The badge library
 

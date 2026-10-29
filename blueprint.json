@@ -5,7 +5,7 @@
 		"author": "nilovelez",
 		"description": "Development site for Cute WP Badges. The plugin itself is mounted (Playground) or linked (Studio) from the repository, not installed by this blueprint."
 	},
-	"landingPage": "/wp-admin/plugins.php",
+	"landingPage": "/wp-admin/tools.php?page=cute-wp-badges",
 	"preferredVersions": {
 		"php": "8.3",
 		"wp": "latest"

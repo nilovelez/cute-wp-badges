@@ -4,7 +4,7 @@
  * Plugin URI:        https://github.com/nilovelez/cute-wp-badges
  * Description:       Generates images of your WordPress.org profile badges in the classic profile style.
  * Version:           0.1.0
- * Requires at least: 6.5
+ * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            Nilo Velez
  * Author URI:        https://www.nilovelez.com
@@ -16,3 +16,8 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+define( 'CUTE_WP_BADGES_VERSION', '0.1.0' );
+define( 'CUTE_WP_BADGES_FILE', __FILE__ );
+
+require_once __DIR__ . '/includes/admin-page.php';

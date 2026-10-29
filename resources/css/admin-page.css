@@ -1,0 +1,26 @@
+/**
+ * The "My WordPress.org Badges" admin page.
+ *
+ * @package Cute_WP_Badges
+ */
+
+/* A checkerboard behind the preview, so the transparent background shows. */
+.cute-wp-badges-preview {
+	display: inline-block;
+	max-width: 100%;
+	padding: 16px;
+	background-color: #fff;
+	background-image:
+		linear-gradient(45deg, #dcdcde 25%, transparent 25%, transparent 75%, #dcdcde 75%),
+		linear-gradient(45deg, #dcdcde 25%, transparent 25%, transparent 75%, #dcdcde 75%);
+	background-position: 0 0, 8px 8px;
+	background-size: 16px 16px;
+	border: 1px solid #c3c4c7;
+	box-sizing: border-box;
+}
+
+.cute-wp-badges-preview img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}

@@ -28,6 +28,7 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 ## Layout
 
 - `cute-wp-badges.php`: main plugin file.
+- `includes/admin-page.php`: the Tools → WordPress.org Badges page. It registers the library as the script module `@cute-wp-badges/cute-wp-badges` and loads `resources/js/admin-page.js` and `resources/css/admin-page.css`.
 - `data/badges.json`: catalog of every badge. Fields and sources in [docs/badges.md](docs/badges.md).
 - `resources/js/cute-wp-badges.js`: the badge library (`renderBadge()`), for the browser and Node. Usage in the README. Written to the WordPress JavaScript coding standards.
 - `scripts/render-samples.mjs`: renders every badge with the library into `samples/` (`npm run samples`) and the grid to compare with `docs/reference-badges.png`, Nilo's reference image of the old style.

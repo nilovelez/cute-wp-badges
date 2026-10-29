@@ -11,7 +11,9 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Milestone 2 (badge library) is done and approved: `resources/js/cute-wp-badges.js` draws any badge as SVG or PNG, with a transparent background outside the badge. Icon `<style>` elements are stripped, since their rules would leak into every badge in the same document. Next is milestone 3 (plugin skeleton and badge page); do not start it until Nilo says so.
+Milestone 2 (badge library) is done and approved: `resources/js/cute-wp-badges.js` draws any badge as SVG or PNG, with a transparent background outside the badge. Icon `<style>` elements are stripped, since their rules would leak into every badge in the same document.
+
+Milestone 3 (plugin skeleton and badge page) is done and waiting for Nilo's review: Tools → WordPress.org Badges (`includes/admin-page.php`, `resources/js/admin-page.js`, `resources/css/admin-page.css`). The library is registered as the script module `@cute-wp-badges/cute-wp-badges` and the page script imports it by that name. The minimum WordPress version went from 6.5 to 6.6, the first one that prints script modules in wp-admin. Tested in Playground with headless Chrome: 67 badges listed, PNG and SVG drawn at the chosen size, download link and error message work, no JavaScript errors. Do not start the next milestone until Nilo says so.
 
 Milestone 2 was tested in Node (`npm run samples`) and in headless Chrome. For the browser test, `--dump-dom` is not reliable: it can dump the page before asynchronous code finishes. Polling the page through the DevTools protocol (`--remote-debugging-port`) works.
 

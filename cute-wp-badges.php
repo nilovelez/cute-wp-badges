@@ -22,3 +22,4 @@ define( 'CUTE_WP_BADGES_FILE', __FILE__ );
 
 require_once __DIR__ . '/includes/admin-page.php';
 require_once __DIR__ . '/includes/profile-badges.php';
+require_once __DIR__ . '/includes/badge-state.php';

@@ -69,9 +69,6 @@ function cute_wp_badges_rest_get_badges( $request ) {
 		return $associations;
 	}
 
-	// Remember the last username for the next visit to the page.
-	update_user_meta( get_current_user_id(), 'cute_wp_badges_username', $username );
-
 	$catalog = cute_wp_badges_get_catalog_ids();
 	$badges  = array();
 	$unknown = array();

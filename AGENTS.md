@@ -16,8 +16,18 @@ An image generator for WordPress.org profile badges, drawn in the old profile st
 - Branches only when Nilo says so: when he wants to try something experimental, asks you to open a branch for a feature, or leaves you his own code on a branch he names.
 - Keep the agent docs in the repo so any agent can pick the work up: update [docs/HANDOFF.md](docs/HANDOFF.md) at the end of every session.
 
+## WordPress workflow
+
+This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovelez/wp-agentic-workflow): load it before changing plugin code. In short:
+
+- Check the environment with the skill's `check-env.mjs` at the start of a session.
+- WordPress Coding Standards: `composer install` once, then `composer lint` before every commit that touches PHP.
+- Test sites: Playground for day-to-day work (`npx @wp-playground/cli@latest server --blueprint ./blueprint.json --mount-dir . /wordpress/wp-content/plugins/cute-wp-badges`), Studio when data must persist. Login `admin` / `password`. Start one only when Nilo asks for it.
+- The plugin is not published on WordPress.org, so `assets/` holds the plugin's own files (icons, fonts) and is part of the release zip. Development files are `export-ignore` in `.gitattributes`.
+
 ## Layout
 
+- `cute-wp-badges.php`: main plugin file.
 - `data/badges.json`: catalog of every badge. Fields and sources in [docs/badges.md](docs/badges.md).
 - `scripts/validate-badges.mjs`: checks the catalog (`node scripts/validate-badges.mjs`). Run it after every change to the catalog.
 - `docs/wporg-profile-api.md`: how to get a user's badges from WordPress.org.

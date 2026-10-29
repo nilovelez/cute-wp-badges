@@ -5,17 +5,31 @@
  */
 
 /* The display rules below would otherwise override the hidden attribute. */
-#cute-wp-badges-profile [hidden],
-.cute-wp-badges-preview [hidden] {
-	display: none;
+.cute-wp-badges [hidden] {
+	display: none !important;
 }
 
-/* The badges of a profile, as buttons with a small image and the name. */
+.cute-wp-badges-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+}
+
+/* Search and filter of the "Any badge" tab. */
+.cute-wp-badges-filters {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+	margin: 16px 0;
+}
+
+/* The picker: a button with a small image and the name per badge. */
 .cute-wp-badges-picker {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
 	gap: 8px;
-	max-width: 960px;
 	margin: 0 0 16px;
 }
 
@@ -24,6 +38,7 @@
 }
 
 .cute-wp-badges-picker button {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -45,9 +60,8 @@
 	border-color: #8c8f94;
 }
 
-.cute-wp-badges-picker button:focus-visible {
-	outline: 2px solid var(--wp-admin-theme-color, #2271b1);
-	outline-offset: 1px;
+.cute-wp-badges-picker button[aria-pressed="false"] img {
+	opacity: 0.35;
 }
 
 .cute-wp-badges-picker button[aria-pressed="true"] {
@@ -56,8 +70,97 @@
 	box-shadow: 0 0 0 1px var(--wp-admin-theme-color, #2271b1);
 }
 
-.cute-wp-badges-picker img {
-	display: block;
+/* A check mark on picked badges, so the state does not rely on color. */
+.cute-wp-badges-picker button[aria-pressed="true"]::after {
+	content: "✓";
+	position: absolute;
+	top: 4px;
+	right: 6px;
+	font-weight: 600;
+	color: var(--wp-admin-theme-color, #2271b1);
+}
+
+.cute-wp-badges-picker .is-new button {
+	border-color: #dba617;
+	box-shadow: 0 0 0 1px #dba617;
+}
+
+.cute-wp-badges-new-tag {
+	padding: 0 6px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: #1d2327;
+	background: #f0c33c;
+	border-radius: 2px;
+}
+
+.cute-wp-badges-picker button:focus-visible,
+.cute-wp-badges-order-list button:focus-visible {
+	outline: 2px solid var(--wp-admin-theme-color, #2271b1);
+	outline-offset: 1px;
+}
+
+/* Order and image, side by side on wide screens. */
+.cute-wp-badges-panels {
+	display: grid;
+	grid-template-columns: minmax(280px, 400px) minmax(0, 1fr);
+	gap: 32px;
+	align-items: start;
+}
+
+@media (max-width: 960px) {
+	.cute-wp-badges-panels {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+.cute-wp-badges-output .form-table th {
+	width: 120px;
+}
+
+/* The order list. */
+.cute-wp-badges-order-list {
+	margin: 0;
+	list-style: none;
+}
+
+.cute-wp-badges-order-list li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 4px;
+	padding: 4px 8px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	cursor: grab;
+}
+
+.cute-wp-badges-order-list li.is-dragging {
+	opacity: 0.4;
+}
+
+.cute-wp-badges-order-list li.is-drop-before {
+	box-shadow: 0 -3px 0 var(--wp-admin-theme-color, #2271b1);
+}
+
+.cute-wp-badges-order-list li.is-drop-after {
+	box-shadow: 0 3px 0 var(--wp-admin-theme-color, #2271b1);
+}
+
+.cute-wp-badges-handle {
+	color: #8c8f94;
+}
+
+.cute-wp-badges-name {
+	flex: 1;
+}
+
+.cute-wp-badges-order-list .button-small {
+	min-width: 28px;
+	padding: 0 4px;
+	text-align: center;
 }
 
 /* A checkerboard behind the preview, so the transparent background shows. */

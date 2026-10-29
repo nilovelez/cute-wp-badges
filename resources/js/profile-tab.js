@@ -1,50 +1,53 @@
 /**
  * The "My badges" tab of the badge page: loads the badges of a WordPress.org
- * profile through the plugin's REST route and lets you pick one.
+ * profile through the plugin's REST route and offers them to the picker.
+ *
+ * The first time, every badge of the profile is picked, in profile order.
+ * After that the saved picks and order are kept: a badge that is new on the
+ * profile shows up unpicked and marked as new, and a badge gone from the
+ * profile leaves the picks, with a notice.
  *
  * @package Cute_WP_Badges
  */
 
-import { getBadge, renderBadge } from '@cute-wp-badges/cute-wp-badges';
-import { showBadge, hideBadge } from '@cute-wp-badges/badge-output';
-
-const container = document.getElementById( 'cute-wp-badges-profile' );
-const settings = JSON.parse( container.dataset.settings );
-const strings = settings.strings;
+import { getBadge } from '@cute-wp-badges/cute-wp-badges';
+import { getState, settings, strings, update } from '@cute-wp-badges/badge-store';
+import { showBadges } from '@cute-wp-badges/badge-picker';
+import { setSourceOrder } from '@cute-wp-badges/badge-order';
+import '@cute-wp-badges/badge-output';
 
 const form = document.getElementById( 'cute-wp-badges-profile-form' );
 const usernameField = document.getElementById( 'cute-wp-badges-username' );
 const status = document.getElementById( 'cute-wp-badges-profile-status' );
 const unknown = document.getElementById( 'cute-wp-badges-unknown' );
-const picker = document.getElementById( 'cute-wp-badges-picker' );
+const changes = document.getElementById( 'cute-wp-badges-changes' );
 const refresh = document.getElementById( 'cute-wp-badges-refresh' );
+const editor = document.getElementById( 'cute-wp-badges-editor' );
 
 const USERNAME_PATTERN = /^[a-z0-9._-]{1,60}$/;
-const THUMBNAIL_SIZE = 64;
 
 let lastRequest = 0;
 
 /**
- * Clears the results of the previous profile.
+ * Hides the results of the previous profile.
  */
 function clearResults() {
 	unknown.hidden = true;
-	unknown.replaceChildren();
-	picker.hidden = true;
-	picker.replaceChildren();
+	changes.hidden = true;
+	changes.replaceChildren();
 	refresh.hidden = true;
-	hideBadge();
+	editor.hidden = true;
 }
 
 /**
  * Asks the plugin's REST route for the badges of a profile.
  *
- * @param {string}  username    WordPress.org username.
- * @param {boolean} skipCache   Whether to read the profile again.
- * @return {Promise<Object>} The badges ids and the unknown badges.
+ * @param {string}  username  WordPress.org username.
+ * @param {boolean} skipCache Whether to read the profile again.
+ * @return {Promise<Object>} The badge ids and the unknown badges.
  */
 async function fetchBadges( username, skipCache ) {
-	const url = new URL( settings.restUrl + encodeURIComponent( username ) );
+	const url = new URL( settings.badgeUrl + encodeURIComponent( username ) );
 	if ( skipCache ) {
 		url.searchParams.set( 'refresh', 'true' );
 	}
@@ -69,79 +72,52 @@ async function fetchBadges( username, skipCache ) {
 }
 
 /**
- * Shows the notice about badges the catalog does not know.
+ * Fills a notice with a text, a list of names and, optionally, a link.
  *
- * @param {Array<Object>} badges Unknown badges, with id and name.
+ * @param {HTMLElement} notice The notice.
+ * @param {string}      text   Text.
+ * @param {string[]}    names  Names to list.
+ * @param {Object}      link   Optional { url, text }.
  */
-function showUnknown( badges ) {
-	const text = document.createElement( 'p' );
-	text.textContent = strings.unknownBadges;
+function fillNotice( notice, text, names, link = null ) {
+	const paragraph = document.createElement( 'p' );
+	paragraph.textContent = text;
 
 	const list = document.createElement( 'ul' );
-	for ( const badge of badges ) {
+	for ( const name of names ) {
 		const item = document.createElement( 'li' );
-		item.textContent = badge.name || badge.id;
+		item.textContent = name;
 		list.append( item );
 	}
 
-	const help = document.createElement( 'p' );
-	const link = document.createElement( 'a' );
-	link.href = strings.updateHelpUrl;
-	link.textContent = strings.updateHelpText;
-	help.append( link );
+	notice.replaceChildren( paragraph, list );
 
-	unknown.replaceChildren( text, list, help );
-	unknown.hidden = false;
-}
-
-/**
- * Marks a badge of the picker as the chosen one and shows it.
- *
- * @param {HTMLButtonElement} button The badge's button.
- */
-function choose( button ) {
-	for ( const other of picker.querySelectorAll( 'button' ) ) {
-		other.setAttribute( 'aria-pressed', other === button ? 'true' : 'false' );
-	}
-	showBadge( button.value, button.dataset.name );
-}
-
-/**
- * Fills the picker with a button per badge, each with a small image.
- *
- * @param {Array<string>} ids Badge ids.
- */
-async function showPicker( ids ) {
-	for ( const id of ids ) {
-		const badge = await getBadge( id );
-		const svg = await renderBadge( id, { size: THUMBNAIL_SIZE } );
-
-		const thumbnail = document.createElement( 'img' );
-		thumbnail.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent( svg );
-		thumbnail.alt = '';
-		thumbnail.width = THUMBNAIL_SIZE;
-		thumbnail.height = THUMBNAIL_SIZE;
-
-		const label = document.createElement( 'span' );
-		label.textContent = badge.name;
-
-		const button = document.createElement( 'button' );
-		button.type = 'button';
-		button.value = id;
-		button.dataset.name = badge.name;
-		button.setAttribute( 'aria-pressed', 'false' );
-		button.append( thumbnail, label );
-
-		const item = document.createElement( 'li' );
-		item.append( button );
-		picker.append( item );
+	if ( link ) {
+		const help = document.createElement( 'p' );
+		const anchor = document.createElement( 'a' );
+		anchor.href = link.url;
+		anchor.textContent = link.text;
+		help.append( anchor );
+		notice.append( help );
 	}
 
-	picker.hidden = false;
+	notice.hidden = false;
 }
 
 /**
- * Loads the badges of the username in the form.
+ * Returns the names of some badges.
+ *
+ * @param {string[]} ids Badge ids.
+ * @return {Promise<string[]>} Names.
+ */
+async function names( ids ) {
+	const badges = await Promise.all( ids.map( getBadge ) );
+	return badges.map( ( badge ) => badge.name );
+}
+
+/**
+ * Loads the badges of the username in the form and merges them with the
+ * saved state.
  *
  * @param {boolean} skipCache Whether to read the profile again.
  */
@@ -178,19 +154,49 @@ async function load( skipCache ) {
 	refresh.hidden = false;
 
 	if ( result.unknown.length ) {
-		showUnknown( result.unknown );
+		fillNotice(
+			unknown,
+			strings.unknownBadges,
+			result.unknown.map( ( badge ) => badge.name || badge.id ),
+			{ url: strings.updateHelpUrl, text: strings.updateHelpText }
+		);
 	}
 
-	if ( ! result.badges.length ) {
+	const profile = result.badges;
+	const saved = getState();
+	let picked = profile;
+	let fresh = [];
+
+	// The same profile as last time: keep the picks and the order.
+	if ( saved.username === username && saved.seen.length ) {
+		fresh = profile.filter( ( id ) => ! saved.seen.includes( id ) );
+		picked = saved.picked.filter( ( id ) => profile.includes( id ) );
+		const gone = saved.picked.filter( ( id ) => ! profile.includes( id ) );
+
+		if ( fresh.length ) {
+			fillNotice( changes, strings.newBadges, await names( fresh ) );
+		}
+		if ( gone.length ) {
+			const goneNotice = document.createElement( 'div' );
+			fillNotice( goneNotice, strings.goneBadges, await names( gone ) );
+			changes.append( ...goneNotice.childNodes );
+			changes.hidden = false;
+		}
+	}
+
+	update( { username, picked, seen: profile } );
+
+	if ( ! profile.length ) {
 		status.textContent = strings.noBadges;
 		return;
 	}
 
-	status.textContent = strings.badgeCount.replace( '%d', result.badges.length );
-	await showPicker( result.badges );
+	status.textContent = strings.badgeCount.replace( '%d', profile.length );
+	setSourceOrder( profile );
+	await showBadges( profile, { fresh } );
 
 	if ( request === lastRequest ) {
-		choose( picker.querySelector( 'button' ) );
+		editor.hidden = false;
 	}
 }
 
@@ -198,13 +204,7 @@ form.addEventListener( 'submit', ( event ) => {
 	event.preventDefault();
 	load( false );
 } );
-
-picker.addEventListener( 'click', ( event ) => {
-	const button = event.target.closest( 'button' );
-	if ( button ) {
-		choose( button );
-	}
-} );
+form.querySelector( 'button[type="submit"]' ).disabled = false;
 
 refresh.querySelector( 'button' ).addEventListener( 'click', () => load( true ) );
 

@@ -28,7 +28,7 @@ The link gives the association slug, which is the `id` in `data/badges.json`. Th
 
 `https://profiles.wordpress.org/associations/?num=100` lists every association the same way.
 
-Caveat: some badges are assigned dynamically rather than by group membership (the code comments in `profile-helpers.php` say so). Plugin Developer has a single member in its group, for example. Whether the groups tab shows those badges for every user, as it does for Nilo, still has to be checked against more profiles.
+Some badges are assigned dynamically rather than by group membership (the code comments in `profile-helpers.php` say so): Plugin Developer has a single stored member and Theme Developer 19, yet thousands of users show them. The groups tab includes them anyway. On 2026-10-29 the groups tab and the profile page listed exactly the same badges for 11 users (nilovelez, matt, westonruter, johnjamesjacoby, otto42, pento, ryelle, jeffpaul, sabernhardt, poena, dd32), with Plugin Developer for 10 of them and Theme Developer for 5. No other association has a member count that suggests dynamic assignment.
 
 ## The profile page
 

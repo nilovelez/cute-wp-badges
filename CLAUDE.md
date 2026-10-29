@@ -1,3 +1,5 @@
+@AGENTS.md
+
 ## Project status (Guppy)
 
 This project publishes its status to Guppy, Nilo's project manager (https://github.com/manuelstone/guppy). Everything Guppy-related lives in `guppy/`, written in English:

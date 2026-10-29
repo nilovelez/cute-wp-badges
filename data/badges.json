@@ -1,0 +1,1026 @@
+{
+  "version": 1,
+  "badges": [
+    {
+      "id": "core-contributor",
+      "name": "Core Contributor",
+      "team": "Core",
+      "teamUrl": "https://make.wordpress.org/core/",
+      "wporgClass": "badge-code",
+      "color": "#cd0000",
+      "icon": {
+        "type": "dashicon",
+        "name": "editor-code"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "core-team",
+      "name": "Core Team",
+      "team": "Core",
+      "teamUrl": "https://make.wordpress.org/core/",
+      "wporgClass": "badge-code-committer",
+      "color": "#cd0000",
+      "icon": {
+        "type": "dashicon",
+        "name": "editor-code"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "design-contributor",
+      "name": "Design Contributor",
+      "team": "Design",
+      "teamUrl": "https://make.wordpress.org/design/",
+      "wporgClass": "badge-design-contributor",
+      "color": "#eec26a",
+      "icon": {
+        "type": "dashicon",
+        "name": "art"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "design-team",
+      "name": "Design Team",
+      "team": "Design",
+      "teamUrl": "https://make.wordpress.org/design/",
+      "wporgClass": "badge-design",
+      "color": "#eec26a",
+      "icon": {
+        "type": "dashicon",
+        "name": "art"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "mobile-team",
+      "name": "Mobile Team",
+      "team": "Mobile",
+      "teamUrl": "https://make.wordpress.org/mobile/",
+      "wporgClass": "badge-mobile",
+      "color": "#fba16c",
+      "icon": {
+        "type": "dashicon",
+        "name": "smartphone"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "accessibility-contributor",
+      "name": "Accessibility Contributor",
+      "team": "Accessibility",
+      "teamUrl": "https://make.wordpress.org/accessibility/",
+      "wporgClass": "badge-accessibility-contributor",
+      "color": "#11799d",
+      "icon": {
+        "type": "dashicon",
+        "name": "universal-access"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "accessibility-team",
+      "name": "Accessibility Team",
+      "team": "Accessibility",
+      "teamUrl": "https://make.wordpress.org/accessibility/",
+      "wporgClass": "badge-accessibility",
+      "color": "#11799d",
+      "icon": {
+        "type": "dashicon",
+        "name": "universal-access"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "translation-contributor",
+      "name": "Translation Contributor",
+      "team": "Polyglots",
+      "teamUrl": "https://make.wordpress.org/polyglots/",
+      "wporgClass": "badge-translation-contributor",
+      "color": "#c32283",
+      "icon": {
+        "type": "dashicon",
+        "name": "translation"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "translation-editor",
+      "name": "Translation Editor",
+      "team": "Polyglots",
+      "teamUrl": "https://make.wordpress.org/polyglots/",
+      "wporgClass": "badge-translation-editor",
+      "color": "#c32283",
+      "icon": {
+        "type": "dashicon",
+        "name": "translation"
+      },
+      "isTeam": true,
+      "aliases": [
+        "polyglots-team"
+      ],
+      "verified": true
+    },
+    {
+      "id": "support-contributor",
+      "name": "Support Contributor",
+      "team": "Support",
+      "teamUrl": "https://make.wordpress.org/support/",
+      "wporgClass": "badge-support-contributor",
+      "color": "#33b4ce",
+      "icon": {
+        "type": "dashicon",
+        "name": "format-chat"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "support-team",
+      "name": "Support Team",
+      "team": "Support",
+      "teamUrl": "https://make.wordpress.org/support/",
+      "wporgClass": "badge-support",
+      "color": "#33b4ce",
+      "icon": {
+        "type": "dashicon",
+        "name": "format-chat"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "documentation-contributor",
+      "name": "Documentation Contributor",
+      "team": "Documentation",
+      "teamUrl": "https://make.wordpress.org/docs/",
+      "wporgClass": "badge-documentation-contributor",
+      "color": "#3b7236",
+      "icon": {
+        "type": "dashicon",
+        "name": "admin-page"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "documentation-team",
+      "name": "Documentation Team",
+      "team": "Documentation",
+      "teamUrl": "https://make.wordpress.org/docs/",
+      "wporgClass": "badge-documentation",
+      "color": "#3b7236",
+      "icon": {
+        "type": "dashicon",
+        "name": "admin-page"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "theme-developer",
+      "name": "Theme Developer",
+      "team": "Themes",
+      "teamUrl": "https://make.wordpress.org/themes/",
+      "wporgClass": "badge-themes",
+      "color": "#4e3288",
+      "icon": {
+        "type": "dashicon",
+        "name": "admin-appearance"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "themes-team",
+      "name": "Themes Team",
+      "team": "Themes",
+      "teamUrl": "https://make.wordpress.org/themes/",
+      "wporgClass": "badge-themes-reviewer",
+      "color": "#4e3288",
+      "icon": {
+        "type": "dashicon",
+        "name": "admin-appearance"
+      },
+      "isTeam": true,
+      "aliases": [
+        "theme-review-team"
+      ],
+      "verified": false
+    },
+    {
+      "id": "plugin-developer",
+      "name": "Plugin Developer",
+      "team": "Plugins",
+      "teamUrl": "https://make.wordpress.org/plugins/",
+      "wporgClass": "badge-plugins",
+      "color": "#f06723",
+      "icon": {
+        "type": "dashicon",
+        "name": "admin-plugins"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "plugin-review-team",
+      "name": "Plugin Review Team",
+      "team": "Plugins",
+      "teamUrl": "https://make.wordpress.org/plugins/",
+      "wporgClass": "badge-plugins-reviewer",
+      "color": "#f06723",
+      "icon": {
+        "type": "dashicon",
+        "name": "admin-plugins"
+      },
+      "isTeam": true,
+      "aliases": [
+        "plugins-team"
+      ],
+      "verified": false
+    },
+    {
+      "id": "community-contributor",
+      "name": "Community Contributor",
+      "team": "Community",
+      "teamUrl": "https://make.wordpress.org/community/",
+      "wporgClass": "badge-community-contributor",
+      "color": "#11799d",
+      "icon": {
+        "type": "dashicon",
+        "name": "groups"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "community-team",
+      "name": "Community Team",
+      "team": "Community",
+      "teamUrl": "https://make.wordpress.org/community/",
+      "wporgClass": "badge-community",
+      "color": "#11799d",
+      "icon": {
+        "type": "dashicon",
+        "name": "groups"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "meetup-organizer",
+      "name": "Meetup Organizer",
+      "team": "Community",
+      "teamUrl": "https://make.wordpress.org/community/",
+      "wporgClass": "badge-organizer",
+      "color": "#f7ad43",
+      "icon": {
+        "type": "dashicon",
+        "name": "nametag"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "wordcamp-organizer",
+      "name": "WordCamp Organizer",
+      "team": "Community",
+      "teamUrl": "https://make.wordpress.org/community/",
+      "wporgClass": "badge-organizer",
+      "color": "#f7ad43",
+      "icon": {
+        "type": "dashicon",
+        "name": "tickets"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "wordcamp-speaker",
+      "name": "WordCamp Speaker",
+      "team": "Community",
+      "teamUrl": "https://make.wordpress.org/community/",
+      "wporgClass": "badge-speaker",
+      "color": "#f7ad43",
+      "icon": {
+        "type": "dashicon",
+        "name": "megaphone"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "wordcamp-volunteer",
+      "name": "WordCamp Volunteer",
+      "team": "Community",
+      "teamUrl": "https://make.wordpress.org/community/",
+      "wporgClass": "badge-wordcamp-volunteer",
+      "color": "#f7ad43",
+      "icon": {
+        "type": "dashicon",
+        "name": "hammer"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "meta-contributor",
+      "name": "Meta Contributor",
+      "team": "Meta",
+      "teamUrl": "https://make.wordpress.org/meta/",
+      "wporgClass": "badge-meta-contributor",
+      "color": "#aeadad",
+      "icon": {
+        "type": "dashicon",
+        "name": "networking"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "meta-team",
+      "name": "Meta Team",
+      "team": "Meta",
+      "teamUrl": "https://make.wordpress.org/meta/",
+      "wporgClass": "badge-meta",
+      "color": "#aeadad",
+      "icon": {
+        "type": "dashicon",
+        "name": "networking"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "training-contributor",
+      "name": "Training Contributor",
+      "team": "Training",
+      "teamUrl": "https://make.wordpress.org/training/",
+      "wporgClass": "badge-training-contributor",
+      "color": "#e9c02d",
+      "icon": {
+        "type": "dashicon",
+        "name": "welcome-learn-more"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "training-team",
+      "name": "Training Team",
+      "team": "Training",
+      "teamUrl": "https://make.wordpress.org/training/",
+      "wporgClass": "badge-training",
+      "color": "#e9c02d",
+      "icon": {
+        "type": "dashicon",
+        "name": "welcome-learn-more"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "wordpress-tv-contributor",
+      "name": "WordPress.tv Contributor",
+      "team": "WordPress.tv",
+      "teamUrl": "https://make.wordpress.org/tv/",
+      "wporgClass": "badge-wordpress-tv-contributor",
+      "color": "#73ad30",
+      "icon": {
+        "type": "dashicon",
+        "name": "video-alt2"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "wordpress-tv-team",
+      "name": "WordPress.tv Team",
+      "team": "WordPress.tv",
+      "teamUrl": "https://make.wordpress.org/tv/",
+      "wporgClass": "badge-wordpress-tv",
+      "color": "#73ad30",
+      "icon": {
+        "type": "dashicon",
+        "name": "video-alt2"
+      },
+      "isTeam": true,
+      "aliases": [
+        "tv-team"
+      ],
+      "verified": true
+    },
+    {
+      "id": "marketing-contributor",
+      "name": "Marketing Contributor",
+      "team": "Marketing",
+      "teamUrl": "https://make.wordpress.org/marketing/",
+      "wporgClass": "badge-marketing-contributor",
+      "color": "#47bea7",
+      "icon": {
+        "type": "dashicon",
+        "name": "format-status"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "marketing-team",
+      "name": "Marketing Team",
+      "team": "Marketing",
+      "teamUrl": "https://make.wordpress.org/marketing/",
+      "wporgClass": "badge-marketing",
+      "color": "#47bea7",
+      "icon": {
+        "type": "dashicon",
+        "name": "format-status"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "media-corps-contributor",
+      "name": "Media Corps Contributor",
+      "team": "Media Corps",
+      "teamUrl": "https://make.wordpress.org/media-corps/",
+      "wporgClass": "badge-media-corps-contributor",
+      "color": "#139f94",
+      "icon": {
+        "type": "dashicon",
+        "name": "format-status"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "media-corps-team",
+      "name": "Media Corps Team",
+      "team": "Media Corps",
+      "teamUrl": "https://make.wordpress.org/media-corps/",
+      "wporgClass": "badge-media-corps-team",
+      "color": "#139f94",
+      "icon": {
+        "type": "dashicon",
+        "name": "format-status"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "wp-cli-contributor",
+      "name": "WP-CLI Contributor",
+      "team": "CLI",
+      "teamUrl": "https://make.wordpress.org/cli/",
+      "wporgClass": "badge-wp-cli-contributor",
+      "color": "#424242",
+      "icon": {
+        "type": "dashicon",
+        "name": "arrow-right-alt2"
+      },
+      "isTeam": false,
+      "aliases": [
+        "cli-contributor"
+      ],
+      "verified": false
+    },
+    {
+      "id": "wp-cli-team",
+      "name": "WP-CLI Team",
+      "team": "CLI",
+      "teamUrl": "https://make.wordpress.org/cli/",
+      "wporgClass": "badge-wp-cli",
+      "color": "#424242",
+      "icon": {
+        "type": "dashicon",
+        "name": "arrow-right-alt2"
+      },
+      "isTeam": true,
+      "aliases": [
+        "cli-team"
+      ],
+      "verified": false
+    },
+    {
+      "id": "hosting-contributor",
+      "name": "Hosting Contributor",
+      "team": "Hosting",
+      "teamUrl": "https://make.wordpress.org/hosting/",
+      "wporgClass": "badge-hosting-contributor",
+      "color": "#5358a6",
+      "icon": {
+        "type": "dashicon",
+        "name": "cloud"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "hosting-team",
+      "name": "Hosting Team",
+      "team": "Hosting",
+      "teamUrl": "https://make.wordpress.org/hosting/",
+      "wporgClass": "badge-hosting",
+      "color": "#5358a6",
+      "icon": {
+        "type": "dashicon",
+        "name": "cloud"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "tide-contributor",
+      "name": "Tide Contributor",
+      "team": "Tide",
+      "teamUrl": "https://make.wordpress.org/tide/",
+      "wporgClass": "badge-tide-contributor",
+      "color": "#1526ff",
+      "icon": {
+        "type": "dashicon",
+        "name": "tide"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "tide-team",
+      "name": "Tide Team",
+      "team": "Tide",
+      "teamUrl": "https://make.wordpress.org/tide/",
+      "wporgClass": "badge-tide",
+      "color": "#1526ff",
+      "icon": {
+        "type": "dashicon",
+        "name": "tide"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "bbpress-contributor",
+      "name": "bbPress Contributor",
+      "team": "bbPress",
+      "teamUrl": "https://bbpress.org/",
+      "wporgClass": "badge-bbpress-contributor",
+      "color": "#2d8e42",
+      "icon": {
+        "type": "dashicon",
+        "name": "buddicons-bbpress-logo"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "bbpress-team",
+      "name": "bbPress Team",
+      "team": "bbPress",
+      "teamUrl": "https://bbpress.org/",
+      "wporgClass": "badge-bbpress",
+      "color": "#2d8e42",
+      "icon": {
+        "type": "dashicon",
+        "name": "buddicons-bbpress-logo"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "buddypress-contributor",
+      "name": "BuddyPress Contributor",
+      "team": "BuddyPress",
+      "teamUrl": "https://buddypress.org/",
+      "wporgClass": "badge-buddypress-contributor",
+      "color": "#d84800",
+      "icon": {
+        "type": "svg",
+        "name": "buddypress"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "buddypress-team",
+      "name": "BuddyPress Team",
+      "team": "BuddyPress",
+      "teamUrl": "https://buddypress.org/",
+      "wporgClass": "badge-buddypress",
+      "color": "#d84800",
+      "icon": {
+        "type": "svg",
+        "name": "buddypress"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "security-contributor",
+      "name": "Security Contributor",
+      "team": "Security",
+      "teamUrl": "https://make.wordpress.org/security/",
+      "wporgClass": "badge-security-contributor",
+      "color": "#00cc3a",
+      "icon": {
+        "type": "dashicon",
+        "name": "lock"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "security-team",
+      "name": "Security Team",
+      "team": "Security",
+      "teamUrl": "https://make.wordpress.org/security/",
+      "wporgClass": "badge-security-team",
+      "color": "#00cc3a",
+      "icon": {
+        "type": "dashicon",
+        "name": "lock"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "test-contributor",
+      "name": "Test Contributor",
+      "team": "Test",
+      "teamUrl": "https://make.wordpress.org/test/",
+      "wporgClass": "badge-test-contributor",
+      "color": "#008080",
+      "icon": {
+        "type": "dashicon",
+        "name": "welcome-view-site"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "test-team",
+      "name": "Test Team",
+      "team": "Test",
+      "teamUrl": "https://make.wordpress.org/test/",
+      "wporgClass": "badge-test",
+      "color": "#008080",
+      "icon": {
+        "type": "dashicon",
+        "name": "welcome-view-site"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "openverse-contributor",
+      "name": "Openverse Contributor",
+      "team": "Openverse",
+      "teamUrl": "https://make.wordpress.org/openverse/",
+      "wporgClass": "badge-openverse-contributor",
+      "color": "#c52b9b",
+      "icon": {
+        "type": "svg",
+        "name": "openverse"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "openverse-team",
+      "name": "Openverse Team",
+      "team": "Openverse",
+      "teamUrl": "https://make.wordpress.org/openverse/",
+      "wporgClass": "badge-openverse",
+      "color": "#c52b9b",
+      "icon": {
+        "type": "svg",
+        "name": "openverse"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "pattern-author",
+      "name": "Pattern Author",
+      "team": "Patterns",
+      "teamUrl": "https://wordpress.org/patterns/",
+      "wporgClass": "badge-pattern-author",
+      "color": "#924bb3",
+      "icon": {
+        "type": "dashicon",
+        "name": "layout"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "patterns-team",
+      "name": "Patterns Team",
+      "team": "Patterns",
+      "teamUrl": "https://wordpress.org/patterns/",
+      "wporgClass": "badge-patterns-team",
+      "color": "#924bb3",
+      "icon": {
+        "type": "dashicon",
+        "name": "layout"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "photo-contributor",
+      "name": "Photo Contributor",
+      "team": "Photos",
+      "teamUrl": "https://make.wordpress.org/photos/",
+      "wporgClass": "badge-photo-contributor",
+      "color": "#cb00f0",
+      "icon": {
+        "type": "dashicon",
+        "name": "camera"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "photos-team",
+      "name": "Photos Team",
+      "team": "Photos",
+      "teamUrl": "https://make.wordpress.org/photos/",
+      "wporgClass": "badge-photos-team",
+      "color": "#cb00f0",
+      "icon": {
+        "type": "dashicon",
+        "name": "camera"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "core-performance-contributor",
+      "name": "Core Performance Contributor",
+      "team": "Core Performance",
+      "teamUrl": "https://make.wordpress.org/performance/",
+      "wporgClass": "badge-performance-contributor",
+      "color": "#0073aa",
+      "icon": {
+        "type": "svg",
+        "name": "performance"
+      },
+      "isTeam": false,
+      "aliases": [
+        "performance-contributor"
+      ],
+      "verified": false
+    },
+    {
+      "id": "core-performance-team",
+      "name": "Core Performance Team",
+      "team": "Core Performance",
+      "teamUrl": "https://make.wordpress.org/performance/",
+      "wporgClass": "badge-performance-team",
+      "color": "#0073aa",
+      "icon": {
+        "type": "svg",
+        "name": "performance"
+      },
+      "isTeam": true,
+      "aliases": [
+        "performance-team"
+      ],
+      "verified": false
+    },
+    {
+      "id": "sustainability-contributor",
+      "name": "Sustainability Contributor",
+      "team": "Sustainability",
+      "teamUrl": "https://make.wordpress.org/sustainability/",
+      "wporgClass": "badge-sustainability-contributor",
+      "color": "#177f6a",
+      "icon": {
+        "type": "dashicon",
+        "name": "admin-site-alt3"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "sustainability-team",
+      "name": "Sustainability Team",
+      "team": "Sustainability",
+      "teamUrl": "https://make.wordpress.org/sustainability/",
+      "wporgClass": "badge-sustainability-team",
+      "color": "#177f6a",
+      "icon": {
+        "type": "dashicon",
+        "name": "admin-site-alt3"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "playground-contributor",
+      "name": "Playground Contributor",
+      "team": "Playground",
+      "teamUrl": "https://make.wordpress.org/playground/",
+      "wporgClass": "badge-playground-contributor",
+      "color": "#3858e9",
+      "icon": {
+        "type": "svg",
+        "name": "playground"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "playground-team",
+      "name": "Playground Team",
+      "team": "Playground",
+      "teamUrl": "https://make.wordpress.org/playground/",
+      "wporgClass": "badge-playground",
+      "color": "#3858e9",
+      "icon": {
+        "type": "svg",
+        "name": "playground"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "core-ai-contributor",
+      "name": "Core AI Contributor",
+      "team": "Core AI",
+      "teamUrl": "https://make.wordpress.org/ai/",
+      "wporgClass": "badge-core-ai-contributor",
+      "color": "#7a00df",
+      "icon": {
+        "type": "svg",
+        "name": "core-ai"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "core-ai-team",
+      "name": "Core AI Team",
+      "team": "Core AI",
+      "teamUrl": "https://make.wordpress.org/ai/",
+      "wporgClass": "badge-core-ai-team",
+      "color": "#7a00df",
+      "icon": {
+        "type": "svg",
+        "name": "core-ai"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "credits-graduate",
+      "name": "Credits Graduate",
+      "team": "WP Credits",
+      "teamUrl": "https://wordpress.org/education/credits/",
+      "wporgClass": "badge-credits-graduate",
+      "color": "#ae47f2",
+      "icon": {
+        "type": "svg",
+        "name": "credits-graduate"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "credits-mentor",
+      "name": "Credits Mentor",
+      "team": "WP Credits",
+      "teamUrl": "https://wordpress.org/education/credits/",
+      "wporgClass": "badge-credits-mentor",
+      "color": "#8329e3",
+      "icon": {
+        "type": "svg",
+        "name": "credits-mentor"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": true
+    },
+    {
+      "id": "campus-connect-participant",
+      "name": "Campus Connect Participant",
+      "team": "WordPress Campus Connect",
+      "teamUrl": "https://wordpress.org/education/campus-connect/",
+      "wporgClass": "badge-campus-connect-participant",
+      "color": "#3858e9",
+      "icon": {
+        "type": "svg",
+        "name": "campus-connect-participant"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "campus-connect-organizer",
+      "name": "Campus Connect Organizer",
+      "team": "WordPress Campus Connect",
+      "teamUrl": "https://wordpress.org/education/campus-connect/",
+      "wporgClass": "badge-campus-connect-organizer",
+      "color": "#3858e9",
+      "icon": {
+        "type": "svg",
+        "name": "campus-connect-organizer"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "pathways-contributor",
+      "name": "Pathways Contributor",
+      "team": "Contributor Pathways",
+      "teamUrl": "https://make.wordpress.org/handbook/pathways/",
+      "wporgClass": "badge-pathways-contributor",
+      "color": "#a8804f",
+      "icon": {
+        "type": "svg",
+        "name": "pathways"
+      },
+      "isTeam": false,
+      "aliases": [],
+      "verified": false
+    },
+    {
+      "id": "pathways-maintainer",
+      "name": "Pathways Maintainer",
+      "team": "Contributor Pathways",
+      "teamUrl": "https://make.wordpress.org/handbook/pathways/",
+      "wporgClass": "badge-pathways-maintainer",
+      "color": "#a8804f",
+      "icon": {
+        "type": "svg",
+        "name": "pathways"
+      },
+      "isTeam": true,
+      "aliases": [],
+      "verified": false
+    }
+  ]
+}

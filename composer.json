@@ -12,6 +12,20 @@
 	},
 	"scripts": {
 		"lint": "phpcs",
-		"fix": "phpcbf"
+		"fix": "phpcbf",
+		"update-badges": [
+			"node scripts/update-badges.mjs",
+			"@validate-badges"
+		],
+		"validate-badges": [
+			"node scripts/validate-badges.mjs",
+			"node scripts/build-preview.mjs"
+		]
+	},
+	"scripts-descriptions": {
+		"lint": "Checks the PHP code against the WordPress Coding Standards.",
+		"fix": "Fixes what can be fixed automatically in the PHP code.",
+		"update-badges": "Updates the badge catalog and icons from WordPress.org, then validates them.",
+		"validate-badges": "Checks the badge catalog and rebuilds preview.html."
 	}
 }

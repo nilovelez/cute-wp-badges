@@ -10,19 +10,20 @@ const seen = new Set();
 
 for (const b of badges) {
   const where = b.id ?? JSON.stringify(b);
-  const keys = ['id', 'name', 'team', 'teamUrl','wporgClass', 'color', 'icon', 'isTeam', 'aliases', 'verified'];
+  const keys = ['id', 'name', 'team', 'teamUrl', 'wporgClass', 'color', 'icon', 'isTeam', 'aliases', 'verified'];
   for (const k of keys) {
     if (!(k in b)) errors.push(`${where}: missing "${k}"`);
+    else if (b[k] === null) errors.push(`${where}: "${k}" is empty, fill it in by hand (see docs/badges.md)`);
   }
   if (!/^[a-z0-9-]+$/.test(b.id)) errors.push(`${where}: bad id`);
   for (const id of [b.id, ...(b.aliases ?? [])]) {
     if (seen.has(id)) errors.push(`${where}: duplicate id or alias "${id}"`);
     seen.add(id);
   }
-  if (!/^#[0-9a-f]{6}$/.test(b.color)) errors.push(`${where}: bad color "${b.color}"`);
-  if (!/^badge-[a-z0-9-]+$/.test(b.wporgClass)) errors.push(`${where}: bad wporgClass "${b.wporgClass}"`);
-  if (!/^https:\/\/[^\s]+\/$/.test(b.teamUrl)) errors.push(`${where}: bad teamUrl "${b.teamUrl}"`);
-  if (!['dashicon', 'svg'].includes(b.icon?.type) || !b.icon?.name) errors.push(`${where}: bad icon`);
+  if (b.color !== null && !/^#[0-9a-f]{6}$/.test(b.color)) errors.push(`${where}: bad color "${b.color}"`);
+  if (b.wporgClass !== null && !/^badge-[a-z0-9-]+$/.test(b.wporgClass)) errors.push(`${where}: bad wporgClass "${b.wporgClass}"`);
+  if (b.teamUrl !== null && !/^https:\/\/[^\s]+\/$/.test(b.teamUrl)) errors.push(`${where}: bad teamUrl "${b.teamUrl}"`);
+  if (b.icon !== null && (!['dashicon', 'svg'].includes(b.icon?.type) || !b.icon?.name)) errors.push(`${where}: bad icon`);
   if (typeof b.isTeam !== 'boolean' || typeof b.verified !== 'boolean') errors.push(`${where}: isTeam and verified must be booleans`);
 }
 

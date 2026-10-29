@@ -31,5 +31,6 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 - `data/badges.json`: catalog of every badge.
 - `resources/icons/`: the custom badge icons, extracted from the WordPress.org profile CSS.
 - `resources/dashicons/`: a local copy of the Dashicons font. Fields and sources in [docs/badges.md](docs/badges.md).
-- `scripts/validate-badges.mjs`: checks the catalog (`node scripts/validate-badges.mjs`). Run it after every change to the catalog.
+- `scripts/update-badges.mjs`: updates the catalog and the icons from WordPress.org (`composer update-badges`). The process is documented in the README.
+- `scripts/validate-badges.mjs`: checks the catalog (`composer validate-badges`, which also rebuilds `preview.html`). Run it after every change to the catalog.
 - `docs/wporg-profile-api.md`: how to get a user's badges from WordPress.org.

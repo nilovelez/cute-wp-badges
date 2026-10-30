@@ -21,7 +21,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Nilo reviews release 1.0.0. Nothing is planned after it in [PLAN.md](PLAN.md); one idea mentioned to him for later is update notices for new GitHub releases, since the plugin does not update itself outside the directory. Start a milestone only on Nilo's clear, explicit go-ahead: an answer to design questions is not one.
+Work is paused after release 1.0.0, by Nilo's choice. Nothing is planned after it in [PLAN.md](PLAN.md). Nilo ruled out update notices for new GitHub releases: do not propose them again. Start a milestone only on Nilo's clear, explicit go-ahead: an answer to design questions is not one.
 
 ## Testing
 

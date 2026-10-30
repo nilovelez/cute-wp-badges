@@ -4,7 +4,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Current state
 
-- Milestones 1 to 5 are done and approved: Nilo tried milestone 5 (composed badges, selection, order and grid, with the state saved per user) and approved it as it is. Milestone 6 (save to the Media Library, export and import a design) is done and waiting for his review. See [PLAN.md](PLAN.md).
+- Milestones 1 to 5 are done and approved: Nilo tried milestone 5 (composed badges, selection, order and grid, with the state saved per user) and approved it as it is. Milestone 6 (save to the Media Library, export and import a design) is done and approved too. See [PLAN.md](PLAN.md).
 - Media Library: PNG through the core route `/wp/v2/media` (title and alt text as query parameters); SVG only with the site option `cute_wp_badges_allow_svg`, built on the server by `includes/media-library.php` with the same layout as `renderGrid()` (the browser test checks that both give the same bytes). SVG is added to the allowed types only while the plugin writes its own file.
 - Settings file: `{ plugin, version: 1, badges, columns, size, gap, format }`, no username, named `cute-wp-badges-<yyyymmdd>.json` as Nilo asked.
 - Every badge ships as a finished SVG in `resources/badges/`, composed and sanitized by `scripts/build-badges.mjs`; Nilo asked for this so the browser only shows, nests or rasterizes files. Nilo's rules for these files: no ids, no metadata beyond the essentials, nothing embedded; do not round the numbers (it saves little and can distort the drawing); the team tint is a solid color, never a transparency (it matters for print). The composed badges render pixel for pixel like the old in-browser drawing.
@@ -19,7 +19,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Nilo reviews milestone 6 (Media Library and settings file). Nothing comes after it in [PLAN.md](PLAN.md) yet. Start a milestone only on Nilo's clear, explicit go-ahead: an answer to design questions is not one.
+Nothing comes after milestone 6 in [PLAN.md](PLAN.md) yet; the next step was proposed to Nilo (a first release) and waits for his decision. Start a milestone only on Nilo's clear, explicit go-ahead: an answer to design questions is not one.
 
 ## Testing
 

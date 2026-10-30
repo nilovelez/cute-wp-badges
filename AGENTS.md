@@ -31,10 +31,13 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 - `includes/admin-page.php`: the Tools → WordPress.org Badges page, with the tabs "My badges" and "Any badge" and the editor they share (pick, order, image). It prints the page settings (REST URLs, saved state, strings) in `data-settings`, registers the script modules and loads the current tab's script and `resources/css/admin-page.css`.
 - `includes/profile-badges.php`: the REST route `GET /cute-wp-badges/v1/badges/<username>`, which reads a user's badges from their WordPress.org profile on the server, with a 12-hour cache.
 - `includes/badge-state.php`: the REST route `POST /cute-wp-badges/v1/state/<tab>`, which saves each tab's state per user in user meta.
+- `includes/media-library.php`: the site option `cute_wp_badges_allow_svg` and the REST route `POST /cute-wp-badges/v1/media`, which builds an SVG image on the server from the badge files and saves it to the Media Library. PNG images go through the core route `/wp/v2/media`.
 - `resources/js/`: script modules, written to the WordPress JavaScript coding standards, no build step:
   - `cute-wp-badges.js`: the badge library (`renderBadge()`, `renderGrid()`), for the browser and Node. Usage in the README.
   - `badge-store.js`: the state of the current tab and its saving; every other module reads and changes the state through it.
   - `badge-picker.js`, `badge-order.js`, `badge-output.js`: the three parts of the editor.
+  - `badge-media.js`: saving the image to the Media Library, and the SVG option for administrators.
+  - `badge-settings-file.js`: exporting and importing a design to a JSON file.
   - `profile-tab.js`, `any-tab.js`: the source of each tab.
 - `data/badges.json`: catalog of every badge. Fields and sources in [docs/badges.md](docs/badges.md).
 - `resources/badges/`: every badge as a finished, sanitized SVG file, built by `scripts/build-badges.mjs` (`composer build-badges`) with `scripts/compose-badge.mjs`. Never edit them by hand.

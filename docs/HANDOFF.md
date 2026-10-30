@@ -4,7 +4,9 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Current state
 
-- Milestones 1 to 5 are done and approved: Nilo tried milestone 5 (composed badges, selection, order and grid, with the state saved per user) and approved it as it is. See [PLAN.md](PLAN.md).
+- Milestones 1 to 5 are done and approved: Nilo tried milestone 5 (composed badges, selection, order and grid, with the state saved per user) and approved it as it is. Milestone 6 (save to the Media Library, export and import a design) is done and waiting for his review. See [PLAN.md](PLAN.md).
+- Media Library: PNG through the core route `/wp/v2/media` (title and alt text as query parameters); SVG only with the site option `cute_wp_badges_allow_svg`, built on the server by `includes/media-library.php` with the same layout as `renderGrid()` (the browser test checks that both give the same bytes). SVG is added to the allowed types only while the plugin writes its own file.
+- Settings file: `{ plugin, version: 1, badges, columns, size, gap, format }`, no username, named `cute-wp-badges-<yyyymmdd>.json` as Nilo asked.
 - Every badge ships as a finished SVG in `resources/badges/`, composed and sanitized by `scripts/build-badges.mjs`; Nilo asked for this so the browser only shows, nests or rasterizes files. Nilo's rules for these files: no ids, no metadata beyond the essentials, nothing embedded; do not round the numbers (it saves little and can distort the drawing); the team tint is a solid color, never a transparency (it matters for print). The composed badges render pixel for pixel like the old in-browser drawing.
 - The admin page has two tabs, chosen with `?tab=profile` (default) or `?tab=any`, sharing one editor: picker, order list and image (see "Layout" in AGENTS.md). Each tab's state (username, picked badges in order, the profile badges seen last time, columns, size, gap, format) is printed into `data-settings` when the page loads and saved through `POST /cute-wp-badges/v1/state/<tab>` half a second after each change. Strings come from PHP in the same attribute, since script modules have no `wp.i18n` in WordPress 6.6.
 - "My badges" saves its state right after every profile load, which also records the badges seen; a badge that was not seen before shows up unpicked and marked as new.
@@ -17,7 +19,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Milestone 6 (Media Library, plus exporting and importing a design's settings to a file, which Nilo added after approving milestone 5), planned in [PLAN.md](PLAN.md). Do not start it until Nilo says so.
+Nilo reviews milestone 6 (Media Library and settings file). Nothing comes after it in [PLAN.md](PLAN.md) yet. Start a milestone only on Nilo's clear, explicit go-ahead: an answer to design questions is not one.
 
 ## Testing
 

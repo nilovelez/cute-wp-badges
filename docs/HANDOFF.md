@@ -4,7 +4,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Current state
 
-- Milestones 1 to 4 are done and approved. Milestone 5 (composed badges, selection, order and grid, with the state saved per user) is done and waiting for Nilo's real-use review: he said it is hard to judge the interface before trying it, so expect changes. See [PLAN.md](PLAN.md).
+- Milestones 1 to 5 are done and approved: Nilo tried milestone 5 (composed badges, selection, order and grid, with the state saved per user) and approved it as it is. See [PLAN.md](PLAN.md).
 - Every badge ships as a finished SVG in `resources/badges/`, composed and sanitized by `scripts/build-badges.mjs`; Nilo asked for this so the browser only shows, nests or rasterizes files. Nilo's rules for these files: no ids, no metadata beyond the essentials, nothing embedded; do not round the numbers (it saves little and can distort the drawing); the team tint is a solid color, never a transparency (it matters for print). The composed badges render pixel for pixel like the old in-browser drawing.
 - The admin page has two tabs, chosen with `?tab=profile` (default) or `?tab=any`, sharing one editor: picker, order list and image (see "Layout" in AGENTS.md). Each tab's state (username, picked badges in order, the profile badges seen last time, columns, size, gap, format) is printed into `data-settings` when the page loads and saved through `POST /cute-wp-badges/v1/state/<tab>` half a second after each change. Strings come from PHP in the same attribute, since script modules have no `wp.i18n` in WordPress 6.6.
 - "My badges" saves its state right after every profile load, which also records the badges seen; a badge that was not seen before shows up unpicked and marked as new.
@@ -17,7 +17,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Nilo tries milestone 5 for real and gives feedback on the interface. Then milestone 6 (Media Library), planned in [PLAN.md](PLAN.md). Do not start anything until Nilo says so.
+Milestone 6 (Media Library, plus exporting and importing a design's settings to a file, which Nilo added after approving milestone 5), planned in [PLAN.md](PLAN.md). Do not start it until Nilo says so.
 
 ## Testing
 

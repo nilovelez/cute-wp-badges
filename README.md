@@ -1,33 +1,90 @@
 # Cute WP Badges
 
-WordPress plugin that generates images of WordPress.org profile badges, in the classic profile style.
+Remember the colorful badges on the old WordPress.org profiles? This WordPress plugin brings them back as images: the badges of your own profile, or any other badge, one by one or in a grid, ready for your website, your slides or your next WordCamp talk.
 
-Work in progress. So far the project has a catalog of every badge (`data/badges.json`), documented in [docs/badges.md](docs/badges.md), the badges as finished SVG files, a JavaScript library that lays them out, and an admin page that loads your badges from your WordPress.org profile and turns them into a single badge or a grid, as PNG or SVG.
+![The badges of a WordPress.org profile, in a grid](docs/images/badges-grid.png)
 
-## The plugin
+## What it does
 
-Requires WordPress 6.6 or later. Once active, **Tools → WordPress.org Badges** has two tabs:
+- Reads the badges of any WordPress.org profile: you only type the username.
+- Draws them in the classic profile style: a colored ring around a white circle, or a tinted one for team badges, with the icon in the badge color.
+- Puts them in the order you want, one badge alone or a grid with as many columns as you like.
+- Gives you a PNG of the size you need, or an SVG that scales to any size, always on a transparent background.
+- Downloads the image or saves it to your Media Library.
+- Remembers your design, so next time it is right where you left it, and tells you when you get a new badge.
 
-- **My badges**: enter a WordPress.org username and the page loads the badges of that profile. If the profile has a badge the plugin does not know, a notice says so: the badge catalog needs updating (see below).
-- **Any badge**: every badge in the catalog, with a search field and a "Team badges only" filter, for example to get a team badge for a contributor day.
+## Installing it
 
-Both tabs work the same way: pick badges (with "All" and "None"), put them in order (drag them, use the arrows, or sort by profile order, name or team), and get one image. One badge gives that badge alone; several give a grid, with the number of columns, the badge size and the gap between badges. The background is always transparent. Download it as PNG, or as SVG, which scales to any size, or save it to the Media Library.
+The plugin is not in the WordPress.org plugin directory, only here on GitHub. It needs WordPress 6.6 or later.
 
-WordPress does not accept SVG files in the Media Library, so saving SVG images is off until an administrator turns on "Allow saving SVG images to the Media Library on this site" on the page. Even then, the SVG never comes from the browser: the page sends the badges and the layout, and the server builds the image from the badge files of the plugin. Other SVG uploads stay blocked.
+1. Go to the [latest release](https://github.com/nilovelez/cute-wp-badges/releases/latest) and download `cute-wp-badges-<version>.zip`.
+2. In your WordPress, go to **Plugins → Add New Plugin → Upload Plugin**, choose the zip and click **Install Now**.
+3. Activate it. The plugin lives in **Tools → WordPress.org Badges**.
 
-"Export settings" saves the design (the badges in order, columns, size, gap and format, but not the username) to a file named `cute-wp-badges-<yyyymmdd>.json`, and "Import settings" loads such a file into the current tab, to restore a design later or on another site. In "My badges", the badges of the file that are not on the loaded profile are left out, with a notice.
+To update it, download the zip of the new release and upload it the same way: WordPress offers to replace the installed version.
 
-The page saves each tab as you leave it, per WordPress user: the username, the picked badges, their order and the image options. The first time, "My badges" picks every badge of the profile. After that it keeps your picks and order: a badge that is new on your profile shows up unpicked and marked as new, ready to add at the end, and a badge gone from your profile is taken out, with a notice.
+## Using it
 
-WordPress.org has no public API for badges, so the plugin reads the groups tab of the profile (`https://profiles.wordpress.org/<username>/groups/`) on the server, through its REST route `GET /wp-json/cute-wp-badges/v1/badges/<username>`, and keeps the result for 12 hours. Add `?refresh=true` (or use the link under the username) to read the profile again. The saved state goes through `POST /wp-json/cute-wp-badges/v1/state/<tab>`. PNG images go to the Media Library through the core route `POST /wp-json/wp/v2/media`, and SVG images through `POST /wp-json/cute-wp-badges/v1/media`, only while the site option `cute_wp_badges_allow_svg` is on. The plugin routes need the `upload_files` capability, and the option can only be changed by users who can manage options.
+### Your badges
 
-## The badges
+In the **My badges** tab, type your WordPress.org username, as in your profile URL (`https://profiles.wordpress.org/username/`), and click **Load badges**. The first time, every badge of your profile is picked. Click a badge to leave it out of the image, or to add it back.
+
+![The "My badges" tab with the badges of a profile](docs/images/my-badges.png)
+
+The plugin keeps the profile for 12 hours, so it does not ask WordPress.org every time. If you have just earned a badge, click **Read the profile again from WordPress.org**.
+
+When you come back, your picks and your order are still there. A badge that is new on your profile shows up marked as **New** and not picked yet, so you choose whether it goes into your image; pick it and it goes at the end. A badge that is gone from your profile is taken out, with a notice.
+
+### Order and image
+
+Drag the badges in the **Order** list, or use the arrows, to put them in the order you want, or sort them by profile order, by name or by team. On the right, choose the number of columns, the badge size and the gap between badges, and the format:
+
+- **PNG**: an image of exactly the size shown under the preview, for most uses.
+- **SVG**: an image that scales to any size without losing quality, for print or for designers.
+
+![The order list and the image options, with a preview](docs/images/order-and-image.png)
+
+Then click **Download**, or **Save to Media Library** to use the image in your posts and pages right away.
+
+WordPress does not accept SVG files in the Media Library, as a safety measure. An administrator can turn on **Allow saving SVG images to the Media Library on this site**: the plugin then saves the SVG images it builds itself from its own badge files, and every other SVG upload stays blocked.
+
+### Any badge
+
+The **Any badge** tab has every badge, not just yours: for example, the badge of a team for a Contributor Day, or the badges of the teams taking part in an event. Search by name or team, or show only the team badges, and pick the ones you want. It works the same way as **My badges**, and keeps its own design.
+
+![The "Any badge" tab, showing only team badges](docs/images/any-badge.png)
+
+### Saving a design
+
+**Export settings** saves your design (the badges, their order and the image options) to a small file, `cute-wp-badges-<date>.json`. **Import settings** loads it again, on the same site or on another one: handy to keep the design of an event, or to make the same image again with a new badge. In **My badges**, the badges of the file that are not on the loaded profile are left out.
+
+## Questions
+
+**A badge is missing.** The plugin knows the badges that existed when it was released. If your profile has a newer one, the page says so: install the latest release, or update the badge list yourself (see [Updating the badge catalog](#updating-the-badge-catalog)).
+
+**Who can use it?** Any user who can upload files to the Media Library (authors, editors and administrators). Each user has their own designs.
+
+**What does it store?** Each user's designs, the profiles it read in the last 12 hours and the SVG option. Deleting the plugin removes all of that. The images saved to the Media Library stay.
+
+**Does it send my data anywhere?** No. It only reads the public profile page on profiles.wordpress.org, from your server.
+
+## For developers
+
+### How it works
+
+WordPress.org has no public API for badges, so the plugin reads the groups tab of the profile (`https://profiles.wordpress.org/<username>/groups/`) on the server, through its REST route `GET /wp-json/cute-wp-badges/v1/badges/<username>`, and keeps the result for 12 hours in a transient. Add `?refresh=true` to read the profile again. Details in [docs/wporg-profile-api.md](docs/wporg-profile-api.md).
+
+The page saves each tab's state per user through `POST /wp-json/cute-wp-badges/v1/state/<tab>`, into user meta. PNG images go to the Media Library through the core route `POST /wp-json/wp/v2/media`, and SVG images through `POST /wp-json/cute-wp-badges/v1/media`, only while the site option `cute_wp_badges_allow_svg` is on: that route takes badge ids and the layout, never markup, and builds the SVG on the server the same way the badge library does. The plugin routes need the `upload_files` capability, and the option can only be changed by users who can manage options.
+
+The page is plain script modules with no build step (`resources/js/`), which is why it needs WordPress 6.6 or later. The settings file is JSON: `{ "plugin": "cute-wp-badges", "version": 1, "badges": [...], "columns", "size", "gap", "format" }`.
+
+### The badges
 
 Every badge ships as a finished SVG file in `resources/badges/<id>.svg`: the ring, the white border, the tinted circle of team badges (a solid color, no transparency) and the icon, all in the badge color, with a transparent background outside the ring. The files are scale-free (a `viewBox`, no fixed size) and clean: no ids, classes, styles, metadata, comments, embedded data or external references.
 
 They are built from the catalog and the icons in `resources/icons/` by `composer build-badges` (`scripts/build-badges.mjs`), which sanitizes each icon with an allowlist on the way in. `composer validate-badges` checks that every badge has its file, up to date and clean. The icons themselves are only a source for the build and stay out of the plugin zip.
 
-## The badge library
+### The badge library
 
 `resources/js/cute-wp-badges.js` gives you any badge of the catalog, or a grid of them, as SVG or PNG. It is a plain ES module with no build step, and works in the browser and in Node 18 or later:
 
@@ -48,7 +105,7 @@ The library reads the catalog and the badge files relative to its own file, so i
 
 To check it by eye, `npm run samples` renders into `samples/` (not committed) one SVG and one PNG per badge, a sheet with all of them, and `reference-grid.svg` and `.png`, the badges of [docs/reference-badges.png](docs/reference-badges.png) in the same order to compare with it. `preview.html` shows each badge drawn with plain CSS next to its composed SVG file.
 
-## Updating the badge catalog
+### Updating the badge catalog
 
 The plugin ships with the list of WordPress.org badges that existed when it was released. Badges change rarely, but when a WordPress.org team adds or renames one, the catalog has to be updated and the plugin packaged again.
 
@@ -102,3 +159,7 @@ You need Git, Node.js 18 or later and Composer.
    ```
 
    Development files are left out (see `.gitattributes`).
+
+## License
+
+GPL-2.0-or-later. See [LICENSE](LICENSE).

@@ -27,7 +27,7 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 
 ## Layout
 
-- `cute-wp-badges.php`: main plugin file.
+- `cute-wp-badges.php`: main plugin file. `uninstall.php` removes the plugin data when it is deleted. `CHANGELOG.md` (for users, one entry per release) and `LICENSE` (GPL-2.0) go in the zip.
 - `includes/admin-page.php`: the Tools → WordPress.org Badges page, with the tabs "My badges" and "Any badge" and the editor they share (pick, order, image). It prints the page settings (REST URLs, saved state, strings) in `data-settings`, registers the script modules and loads the current tab's script and `resources/css/admin-page.css`.
 - `includes/profile-badges.php`: the REST route `GET /cute-wp-badges/v1/badges/<username>`, which reads a user's badges from their WordPress.org profile on the server, with a 12-hour cache.
 - `includes/badge-state.php`: the REST route `POST /cute-wp-badges/v1/state/<tab>`, which saves each tab's state per user in user meta.
@@ -46,3 +46,5 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 - `scripts/update-badges.mjs`: updates the catalog and the icons from WordPress.org (`composer update-badges`). The process is documented in the README.
 - `scripts/validate-badges.mjs`: checks the catalog and that every badge file is up to date and clean (`composer validate-badges`, which also rebuilds `preview.html`). Run `composer build-badges` and then this after every change to the catalog or the icons.
 - `docs/wporg-profile-api.md`: how to get a user's badges from WordPress.org.
+- `docs/images/`: the README screenshots, taken in headless Chrome against Playground with Nilo's profile. Retake them when the page changes visibly.
+- `README.md` is written for people first (what it does, installing, using it, questions), with the developer sections at the end.

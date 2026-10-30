@@ -15,6 +15,8 @@ import { getState, settings, strings, update } from '@cute-wp-badges/badge-store
 import { showBadges } from '@cute-wp-badges/badge-picker';
 import { setSourceOrder } from '@cute-wp-badges/badge-order';
 import '@cute-wp-badges/badge-output';
+import '@cute-wp-badges/badge-media';
+import '@cute-wp-badges/badge-settings-file';
 
 const form = document.getElementById( 'cute-wp-badges-profile-form' );
 const usernameField = document.getElementById( 'cute-wp-badges-username' );

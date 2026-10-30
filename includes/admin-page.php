@@ -94,8 +94,11 @@ function cute_wp_badges_enqueue_admin_page() {
 	wp_register_script_module( $library, plugins_url( 'resources/js/cute-wp-badges.js', CUTE_WP_BADGES_FILE ), array(), CUTE_WP_BADGES_VERSION );
 	wp_register_script_module( $store, plugins_url( 'resources/js/badge-store.js', CUTE_WP_BADGES_FILE ), array(), CUTE_WP_BADGES_VERSION );
 
-	$modules = array( 'badge-picker', 'badge-order', 'badge-output' );
+	// Every module the tab script loads, so they all get into the import map.
+	$modules          = array( 'badge-picker', 'badge-order', 'badge-output', 'badge-media', 'badge-settings-file' );
+	$tab_dependencies = array( $library, $store );
 	foreach ( $modules as $module ) {
+		$tab_dependencies[] = '@cute-wp-badges/' . $module;
 		wp_register_script_module(
 			'@cute-wp-badges/' . $module,
 			plugins_url( 'resources/js/' . $module . '.js', CUTE_WP_BADGES_FILE ),
@@ -109,7 +112,7 @@ function cute_wp_badges_enqueue_admin_page() {
 	wp_enqueue_script_module(
 		'@cute-wp-badges/' . $tab . '-tab',
 		plugins_url( 'resources/js/' . $tab . '-tab.js', CUTE_WP_BADGES_FILE ),
-		array( $library, $store, '@cute-wp-badges/badge-picker', '@cute-wp-badges/badge-order', '@cute-wp-badges/badge-output' ),
+		$tab_dependencies,
 		CUTE_WP_BADGES_VERSION
 	);
 
@@ -135,6 +138,13 @@ function cute_wp_badges_get_page_settings( $tab ) {
 		'stateUrl' => rest_url( 'cute-wp-badges/v1/state/' . $tab ),
 		'nonce'    => wp_create_nonce( 'wp_rest' ),
 		'state'    => cute_wp_badges_get_state( $tab ),
+		'media'    => array(
+			'pngUrl'      => rest_url( 'wp/v2/media' ),
+			'svgUrl'      => rest_url( 'cute-wp-badges/v1/media' ),
+			'settingsUrl' => rest_url( 'wp/v2/settings' ),
+			'editUrl'     => admin_url( 'post.php?action=edit&post=' ),
+			'allowSvg'    => cute_wp_badges_svg_allowed(),
+		),
 		'strings'  => array(
 			'loading'        => __( 'Loading badges from WordPress.org…', 'cute-wp-badges' ),
 			'noBadges'       => __( 'This profile has no badges.', 'cute-wp-badges' ),
@@ -159,6 +169,19 @@ function cute_wp_badges_get_page_settings( $tab ) {
 			'remove'         => __( 'Remove %s', 'cute-wp-badges' ),
 			/* translators: 1: image width, 2: image height, in pixels. */
 			'imageSize'      => __( '%1$d × %2$d pixels', 'cute-wp-badges' ),
+			/* translators: %s: WordPress.org username. */
+			'userImageTitle' => __( 'WordPress.org badges of %s', 'cute-wp-badges' ),
+			'imageTitle'     => __( 'WordPress.org badges', 'cute-wp-badges' ),
+			'mediaSaving'    => __( 'Saving to the Media Library…', 'cute-wp-badges' ),
+			'mediaSaved'     => __( 'Saved to the Media Library.', 'cute-wp-badges' ),
+			'mediaEdit'      => __( 'Edit the image', 'cute-wp-badges' ),
+			'mediaFailed'    => __( 'The image could not be saved to the Media Library.', 'cute-wp-badges' ),
+			'svgOff'         => __( 'Saving SVG images to the Media Library is turned off on this site. Download the image, or save it as PNG.', 'cute-wp-badges' ),
+			'optionFailed'   => __( 'The option could not be changed.', 'cute-wp-badges' ),
+			'importDone'     => __( 'Settings imported.', 'cute-wp-badges' ),
+			'importInvalid'  => __( 'This file is not a settings file of Cute WP Badges.', 'cute-wp-badges' ),
+			'importUnknown'  => __( 'Some badges in the file are not known to this version of the plugin, so they were left out.', 'cute-wp-badges' ),
+			'importNotHere'  => __( 'These badges are not on this profile, so they were left out:', 'cute-wp-badges' ),
 		),
 	);
 }
@@ -316,7 +339,26 @@ function cute_wp_badges_render_editor( $tab ) {
 					<img id="cute-wp-badges-image" alt="" hidden>
 				</div>
 				<p id="cute-wp-badges-message" role="status"></p>
-				<p><a id="cute-wp-badges-download" class="button button-primary" hidden><?php esc_html_e( 'Download', 'cute-wp-badges' ); ?></a></p>
+				<p class="cute-wp-badges-actions">
+					<a id="cute-wp-badges-download" class="button button-primary" hidden><?php esc_html_e( 'Download', 'cute-wp-badges' ); ?></a>
+					<button type="button" id="cute-wp-badges-save-media" class="button" hidden><?php esc_html_e( 'Save to Media Library', 'cute-wp-badges' ); ?></button>
+				</p>
+				<p id="cute-wp-badges-media-status" role="status"></p>
+				<?php if ( current_user_can( 'manage_options' ) ) : ?>
+					<p>
+						<label><input type="checkbox" id="cute-wp-badges-allow-svg"<?php checked( cute_wp_badges_svg_allowed() ); ?>> <?php esc_html_e( 'Allow saving SVG images to the Media Library on this site', 'cute-wp-badges' ); ?></label>
+					</p>
+					<p class="description"><?php esc_html_e( 'Only the SVG images this page builds from the plugin badges; other SVG uploads stay blocked.', 'cute-wp-badges' ); ?></p>
+				<?php endif; ?>
+
+				<h3><?php esc_html_e( 'Settings file', 'cute-wp-badges' ); ?></h3>
+				<p class="description"><?php esc_html_e( 'Save this design (the badges, their order and the image options) to a file, to restore it later or on another site.', 'cute-wp-badges' ); ?></p>
+				<p class="cute-wp-badges-actions">
+					<button type="button" id="cute-wp-badges-export" class="button"><?php esc_html_e( 'Export settings', 'cute-wp-badges' ); ?></button>
+					<button type="button" id="cute-wp-badges-import" class="button"><?php esc_html_e( 'Import settings', 'cute-wp-badges' ); ?></button>
+					<input type="file" id="cute-wp-badges-import-file" accept=".json,application/json" hidden>
+				</p>
+				<div id="cute-wp-badges-file-status" role="status"></div>
 			</section>
 		</div>
 	</div>

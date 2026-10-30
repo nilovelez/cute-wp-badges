@@ -17,6 +17,31 @@ const NUMBERS = [ 'columns', 'size', 'gap' ];
 
 let imageUrl = null;
 let lastRequest = 0;
+const imageListeners = new Set();
+let currentImage = null;
+
+/**
+ * Calls a function with the current image and again every time it changes,
+ * with the image or null when there is none.
+ *
+ * @param {Function} listener Receives { blob, name, format, width, height } or null.
+ */
+export function onImage( listener ) {
+	imageListeners.add( listener );
+	listener( currentImage );
+}
+
+/**
+ * Tells the image listeners about a new image, or that there is none.
+ *
+ * @param {Object|null} current The image, or null.
+ */
+function announce( current ) {
+	currentImage = current;
+	for ( const listener of imageListeners ) {
+		listener( current );
+	}
+}
 
 /**
  * Returns the size of the image, in pixels, as the library lays it out.
@@ -67,6 +92,7 @@ function showFields( state ) {
  * @param {string} text Message.
  */
 function hideImage( text ) {
+	announce( null );
 	image.hidden = true;
 	download.hidden = true;
 	message.textContent = text;
@@ -118,17 +144,19 @@ async function render() {
 	image.width = width;
 	image.height = height;
 	image.hidden = false;
+	const name = format === 'png' ? `${ fileName( state ) }-${ width }x${ height }` : fileName( state );
 	download.href = imageUrl;
-	download.download = format === 'png' ? `${ fileName( state ) }-${ width }x${ height }.png` : `${ fileName( state ) }.svg`;
+	download.download = `${ name }.${ format }`;
 	download.hidden = false;
 	message.textContent =
 		format === 'png' ? strings.imageSize.replace( '%1$d', width ).replace( '%2$d', height ) : '';
+	announce( { blob, name, format, width, height } );
 }
 
 /**
  * Puts the state into the form fields.
  */
-function fillForm() {
+export function fillForm() {
 	const state = getState();
 	for ( const name of NUMBERS ) {
 		form.elements[ name ].value = state[ name ];

@@ -10,6 +10,8 @@ import { strings } from '@cute-wp-badges/badge-store';
 import { showBadges } from '@cute-wp-badges/badge-picker';
 import '@cute-wp-badges/badge-order';
 import '@cute-wp-badges/badge-output';
+import '@cute-wp-badges/badge-media';
+import '@cute-wp-badges/badge-settings-file';
 
 const search = document.getElementById( 'cute-wp-badges-search' );
 const teamsOnly = document.getElementById( 'cute-wp-badges-teams-only' );

@@ -183,3 +183,9 @@
 	max-width: 100%;
 	height: auto;
 }
+
+/* Messages of the settings file. */
+#cute-wp-badges-file-status ul {
+	margin: 0 0 8px 20px;
+	list-style: disc;
+}

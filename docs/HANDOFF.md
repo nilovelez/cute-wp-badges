@@ -4,7 +4,9 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Current state
 
-- Milestones 1 to 5 are done and approved: Nilo tried milestone 5 (composed badges, selection, order and grid, with the state saved per user) and approved it as it is. Milestone 6 (save to the Media Library, export and import a design) is done and approved too. See [PLAN.md](PLAN.md).
+- Milestones 1 to 5 are done and approved: Nilo tried milestone 5 (composed badges, selection, order and grid, with the state saved per user) and approved it as it is. Milestone 6 (save to the Media Library, export and import a design) is done and approved too. Milestone 7 released version 1.0.0 on GitHub (tag `v1.0.0`, with the zip attached), waiting for Nilo's review. See [PLAN.md](PLAN.md).
+- Release 1.0.0: `uninstall.php` (tested on the Studio site by running it with `eval-file`; never `wp plugin uninstall` there, since the plugin folder is a junction to the repo and would be deleted), README rewritten for people with screenshots in `docs/images/`, `LICENSE`, `CHANGELOG.md`. The zip (`git archive`, 86 files) was unpacked into a fresh Playground and passed the whole browser test. Nilo chose: no translation files and no `readme.txt` until the plugin goes to the directory.
+- Plugin Check (on Studio, with the development files excluded) found no code issues. It reports the missing `readme.txt` and that "WP" in the name and slug is a restricted term for the WordPress.org directory; both only matter if the plugin is ever submitted there, and the name is Nilo's call.
 - Media Library: PNG through the core route `/wp/v2/media` (title and alt text as query parameters); SVG only with the site option `cute_wp_badges_allow_svg`, built on the server by `includes/media-library.php` with the same layout as `renderGrid()` (the browser test checks that both give the same bytes). SVG is added to the allowed types only while the plugin writes its own file.
 - Settings file: `{ plugin, version: 1, badges, columns, size, gap, format }`, no username, named `cute-wp-badges-<yyyymmdd>.json` as Nilo asked.
 - Every badge ships as a finished SVG in `resources/badges/`, composed and sanitized by `scripts/build-badges.mjs`; Nilo asked for this so the browser only shows, nests or rasterizes files. Nilo's rules for these files: no ids, no metadata beyond the essentials, nothing embedded; do not round the numbers (it saves little and can distort the drawing); the team tint is a solid color, never a transparency (it matters for print). The composed badges render pixel for pixel like the old in-browser drawing.
@@ -19,7 +21,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Nothing comes after milestone 6 in [PLAN.md](PLAN.md) yet; the next step was proposed to Nilo (a first release) and waits for his decision. Start a milestone only on Nilo's clear, explicit go-ahead: an answer to design questions is not one.
+Nilo reviews release 1.0.0. Nothing is planned after it in [PLAN.md](PLAN.md); one idea mentioned to him for later is update notices for new GitHub releases, since the plugin does not update itself outside the directory. Start a milestone only on Nilo's clear, explicit go-ahead: an answer to design questions is not one.
 
 ## Testing
 

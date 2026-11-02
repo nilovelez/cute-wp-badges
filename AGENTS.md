@@ -46,5 +46,5 @@ This plugin follows the `wp-agentic-workflow` skill (https://github.com/nilovele
 - `scripts/update-badges.mjs`: updates the catalog and the icons from WordPress.org (`composer update-badges`). The process is documented in the README.
 - `scripts/validate-badges.mjs`: checks the catalog and that every badge file is up to date and clean (`composer validate-badges`, which also rebuilds `preview.html`). Run `composer build-badges` and then this after every change to the catalog or the icons.
 - `docs/wporg-profile-api.md`: how to get a user's badges from WordPress.org.
-- `docs/images/`: the README screenshots, taken in headless Chrome against Playground with Nilo's profile. Retake them when the page changes visibly.
+- `docs/images/`: the README screenshots and example images, taken in headless Chrome against a fresh Playground with Nilo's profile. Retake them when the page changes visibly, and never simulate or make up badges for them.
 - `README.md` is written for people first (what it does, installing, using it, questions), with the developer sections at the end.

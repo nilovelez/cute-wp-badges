@@ -18,45 +18,128 @@ Remember the colorful badges on the old WordPress.org profiles? This WordPress p
 The plugin is not in the WordPress.org plugin directory, only here on GitHub. It needs WordPress 6.6 or later.
 
 1. Go to the [latest release](https://github.com/nilovelez/cute-wp-badges/releases/latest) and download `cute-wp-badges-<version>.zip`.
-2. In your WordPress, go to **Plugins → Add New Plugin → Upload Plugin**, choose the zip and click **Install Now**.
-3. Activate it. The plugin lives in **Tools → WordPress.org Badges**.
+2. In your WordPress, go to **Plugins → Add New Plugin** and click **Upload Plugin** at the top.
+3. Choose the zip and click **Install Now**.
 
-To update it, download the zip of the new release and upload it the same way: WordPress offers to replace the installed version.
+   ![The Upload Plugin screen of WordPress](docs/images/install-upload.png)
+
+4. Click **Activate Plugin**.
+
+### Updating it
+
+The plugin does not update itself, since it does not come from the plugin directory. When there is a new release, download its zip and upload it the same way. WordPress notices that the plugin is already installed and offers to **Replace current with uploaded**. Your designs and settings stay.
 
 ## Using it
 
-### Your badges
+### Finding the page
 
-In the **My badges** tab, type your WordPress.org username, as in your profile URL (`https://profiles.wordpress.org/username/`), and click **Load badges**. The first time, every badge of your profile is picked. Click a badge to leave it out of the image, or to add it back.
+The plugin lives in **Tools → WordPress.org Badges**. Any user who can upload files to the Media Library can use it: authors, editors and administrators.
 
-![The "My badges" tab with the badges of a profile](docs/images/my-badges.png)
+![The Tools menu, with WordPress.org Badges](docs/images/tools-menu.png)
 
-The plugin keeps the profile for 12 hours, so it does not ask WordPress.org every time. If you have just earned a badge, click **Read the profile again from WordPress.org**.
+The page has two tabs:
 
-When you come back, your picks and your order are still there. A badge that is new on your profile shows up marked as **New** and not picked yet, so you choose whether it goes into your image; pick it and it goes at the end. A badge that is gone from your profile is taken out, with a notice.
+- **My badges**: the badges of a WordPress.org profile, yours or anyone else's.
+- **Any badge**: every badge there is, to make an image with whichever you want.
 
-### Order and image
+Both tabs work the same way: you pick badges, put them in order and choose how the image looks. Each tab keeps its own design.
 
-Drag the badges in the **Order** list, or use the arrows, to put them in the order you want, or sort them by profile order, by name or by team. On the right, choose the number of columns, the badge size and the gap between badges, and the format:
+### Step 1: load your profile
 
-- **PNG**: an image of exactly the size shown under the preview, for most uses.
-- **SVG**: an image that scales to any size without losing quality, for print or for designers.
+In **My badges**, type your WordPress.org username, as in your profile URL (`https://profiles.wordpress.org/username/`), and click **Load badges**.
 
-![The order list and the image options, with a preview](docs/images/order-and-image.png)
+![The "My badges" tab, before loading a profile](docs/images/username.png)
 
-Then click **Download**, or **Save to Media Library** to use the image in your posts and pages right away.
+The plugin reads the profile from WordPress.org and keeps it for 12 hours, so it does not ask every time. If you have just earned a badge, click **Read the profile again from WordPress.org**.
 
-WordPress does not accept SVG files in the Media Library, as a safety measure. An administrator can turn on **Allow saving SVG images to the Media Library on this site**: the plugin then saves the SVG images it builds itself from its own badge files, and every other SVG upload stays blocked.
+### Step 2: pick your badges
+
+The first time, every badge of the profile is picked, with a check mark. Click a badge to leave it out of the image, and click it again to add it back. **All** and **None** pick or drop them all at once.
+
+![The badges of a profile, two of them left out](docs/images/my-badges.png)
+
+When you come back later, everything is as you left it. New and lost badges are taken care of too. A badge you earned since your last visit shows up marked as **New**, not picked yet, so you decide whether it goes into your image. A badge that is no longer on your profile is taken out, with a notice.
+
+### Step 3: put them in order
+
+The **Order** list has the picked badges, in the order they will appear in the image: left to right, then top to bottom.
+
+- Drag a badge by its handle to move it.
+- Or use the **↑** and **↓** buttons, which also work from the keyboard.
+- **✕** takes a badge out of the image.
+- **Sort by** puts them all in profile order, by name or by team at once.
+
+![The order list](docs/images/order.png)
+
+### Step 4: choose how the image looks
+
+Under **Image**:
+
+- **Columns**: how many badges go in each row.
+- **Badge size**: the size of each badge, in pixels.
+- **Gap**: the space between badges, in pixels.
+- **Format**:
+  - **PNG**: an image of exactly the size shown under the preview. Right for most uses.
+  - **SVG**: an image that scales to any size without losing quality. For print or for designers.
+
+The preview shows the image as it will be, on a checkered background: the real image has a transparent background, so it fits on any color.
+
+![The image options with a grid preview](docs/images/image.png)
+
+With a single badge picked there is no grid, so **Columns** and **Gap** go away and you get that badge alone.
+
+![The image options with one badge](docs/images/single-badge.png)
+
+### Step 5: download it or save it to the Media Library
+
+**Download** saves the image to your computer. **Save to Media Library** adds it to your site's Media Library, with a title and the badge names as alternative text, ready for your posts and pages. A link takes you to the new image.
+
+![The image saved to the Media Library](docs/images/media-saved.png)
+
+![The Media Library with the saved images](docs/images/media-library.png)
+
+#### SVG in the Media Library
+
+WordPress does not accept SVG files in the Media Library, as a safety measure. Administrators see one more option under the buttons: **Allow saving SVG images to the Media Library on this site**. With it on, the plugin saves the SVG images it builds itself from its own badge files. Any other SVG upload stays blocked.
+
+![The SVG format, with the option for administrators](docs/images/svg-option.png)
+
+Downloading an SVG works for everyone, with or without this option.
 
 ### Any badge
 
-The **Any badge** tab has every badge, not just yours: for example, the badge of a team for a Contributor Day, or the badges of the teams taking part in an event. Search by name or team, or show only the team badges, and pick the ones you want. It works the same way as **My badges**, and keeps its own design.
+The **Any badge** tab has every badge, not just yours. Use it for the badge of a team for a Contributor Day, for example, or for the badges of the teams taking part in an event. No badge is picked at first.
+
+Search by badge name or team:
+
+![Searching for "photo" in the "Any badge" tab](docs/images/any-search.png)
+
+Or tick **Team badges only** to see only the team badges:
 
 ![The "Any badge" tab, showing only team badges](docs/images/any-badge.png)
 
-### Saving a design
+From there it works just like **My badges**: order, image, download or Media Library.
 
-**Export settings** saves your design (the badges, their order and the image options) to a small file, `cute-wp-badges-<date>.json`. **Import settings** loads it again, on the same site or on another one: handy to keep the design of an event, or to make the same image again with a new badge. In **My badges**, the badges of the file that are not on the loaded profile are left out.
+### Saving a design to a file
+
+Under **Settings file**:
+
+- **Export settings** saves your design to a small file, `cute-wp-badges-<yyyymmdd>.json`. The design is the badges, their order and the image options. Your username is not saved.
+- **Import settings** loads such a file into the current tab, on the same site or on another one.
+
+Exporting is handy to keep the design of an event, to make the same image again with a new badge, or to share a layout with someone else. In **My badges**, any badge of the file that is not on the loaded profile is left out, and the page tells you which ones.
+
+![The Settings file section after importing a design](docs/images/settings-file.png)
+
+### What you get
+
+One badge, as a 256 × 256 PNG:
+
+![A single badge, as a PNG](docs/images/example-single.png)
+
+A grid, as an SVG that scales to any size:
+
+![A grid of badges, as an SVG](docs/images/example-grid.svg)
 
 ## Questions
 

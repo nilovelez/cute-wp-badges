@@ -23,7 +23,7 @@ Where the work stands, for the next agent. Update it at the end of every session
 
 ## Next
 
-Work is paused after release 1.0.0, by Nilo's choice. Nothing is planned after it in [PLAN.md](PLAN.md). Nilo ruled out update notices for new GitHub releases: do not propose them again. Start a milestone only on Nilo's clear, explicit go-ahead: an answer to design questions is not one.
+Milestone 8 (the user guide in the README) is done and waits for Nilo's review: a step-by-step guide with 16 images in `docs/images/`, taken by a headless Chrome script against a fresh Playground with Nilo's profile. New and removed profile badges are only described, never simulated: Nilo does not want made-up badges. The BuddyPress icon was tried as the handbook's Dashicon and reverted (see [badges.md](badges.md#open-points)). Nothing is planned after it in [PLAN.md](PLAN.md). Nilo ruled out update notices for new GitHub releases: do not propose them again. Start a milestone only on Nilo's clear, explicit go-ahead: an answer to design questions is not one.
 
 ## Testing
 

@@ -636,8 +636,8 @@
       "wporgClass": "badge-buddypress-contributor",
       "color": "#d84800",
       "icon": {
-        "type": "dashicon",
-        "name": "buddicons-buddypress-logo"
+        "type": "svg",
+        "name": "buddypress"
       },
       "isTeam": false,
       "aliases": [],
@@ -651,8 +651,8 @@
       "wporgClass": "badge-buddypress",
       "color": "#d84800",
       "icon": {
-        "type": "dashicon",
-        "name": "buddicons-buddypress-logo"
+        "type": "svg",
+        "name": "buddypress"
       },
       "isTeam": true,
       "aliases": [],

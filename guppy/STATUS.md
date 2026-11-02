@@ -6,6 +6,7 @@ Cute WP Badges is a WordPress plugin, published on GitHub only, that generates i
 
 Newest entries first. One per work session, brief.
 
+- 2026-11-02: Milestone 8 pushed; Claude attribution removed from the v1.0.0 release notes. Session closed, milestone 8 waiting for Nilo's review.
 - 2026-11-02: 1.0.0 approved. Milestone 8: README user guide with 16 screenshots and examples, pending review. BuddyPress icon tried as the handbook Dashicon and reverted.
 - 2026-10-30: Work paused after 1.0.0; the update notices idea dropped. Test site stopped.
 - 2026-10-30: Milestone 7 done: uninstall.php, Plugin Check, README for people with screenshots, LICENSE, CHANGELOG; the zip tested in a fresh Playground. Version 1.0.0 released on GitHub.

@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- The BuddyPress badges use the BuddyPress logo from Dashicons, as the profile badges handbook says.
+
 ## 1.0.0 (2026-10-30)
 
 The first release.
